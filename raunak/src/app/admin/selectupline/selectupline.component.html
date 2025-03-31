@@ -1,0 +1,27 @@
+<div class="container border border-1">
+<h5 class="p-2 odd">Company Lena Dena</h5>
+<div class="row g-3 mb-2">
+    <div class="col-2">
+        <label for="">Select Type:</label>
+    </div>
+    <div class="col-3"> <!-- Adjusted column size to accommodate the select and button -->
+        <select class="w-100" #selectuserid  name="selectuserid" id="selectuserid" (change)="senduserid(selectuserid.value)">
+            <option value="0" selected hidden disabled>Select Parent</option>
+            <ng-container *ngFor="let user of userhierarchaldata">
+                <!-- Apply *ngIf to individual option elements -->
+                <option *ngIf="user" [value]="user.user_id">{{ user.user_code }}</option>
+                <!-- <option *ngIf="!user" [value]="own_data[0].user_id">{{ own_data[0].user_name }}</option> -->
+                
+            </ng-container>
+            <option *ngIf="userhierarchaldata.length === 0" [value]="own_data?.user_id">{{ own_data?.user_code }}</option>
+            <!-- <option *ngFor="let users of userhierarchaldata" [value]="users.user_id" >{{users.user_name}}</option> -->
+        </select>
+        
+        
+    </div>
+    <div class="col-2">
+        <button [disabled]="!this.user_id" [routerLink]="['/admin/create-user',selecteduserdata?.user_id]">Submit</button>
+    </div>
+</div>
+</div>
+

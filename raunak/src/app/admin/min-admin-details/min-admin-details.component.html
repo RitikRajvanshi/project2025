@@ -1,0 +1,185 @@
+<div class="row g-3 mb-2 p-2">
+    <div class="col-xl-4 col-sm-2">
+     <input type="text" name="" id="" placeholder="Search...">
+     <button class="bg-danger text-light">Search</button>
+     <button class="bg-danger text-light"><a class="text-light" [routerLink]="['../select-upline',users_data?.user_id,3]">Create</a></button>
+
+    </div> 
+  </div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col" class="odd">*</th>
+        <th scope="col" class="even">CODE</th>
+        <th scope="col" class="odd">NAME</th>
+        <th scope="col" class="even">CHIPS</th>
+        <th scope="col" class="odd">DEPOSIT</th>
+        <th scope="col" class="even">WITHDRAW</th>
+        <th scope="col" class="odd">EXPOSURE</th>
+        <th scope="col" class="even">COMM TYPE</th>
+        <th scope="col" class="odd">ACC. TYPE</th>
+        <th scope="col" class="even">BET LOCK</th>
+        <th scope="col" class="odd">ACTION</th>
+      
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of minAdminDataArray">
+        <th scope="row">+</th>
+        <td><h5 class="text-primary">{{data.user_code}}</h5>
+          <button class="bg-danger text-light"*ngIf="data?.status===1" (click)="updateStatus(data)">In-active</button>
+          <button class="bg-success text-light" *ngIf="data?.status===0" (click)="updateStatus(data)">Active</button>
+      </td>
+        <td><h6>{{data.user_name}}</h6>
+          <button class="bg-danger text-light" [routerLink]="['/admin/edit-user',data.user_id]">Edit</button>
+          <button class="bg-success text-light" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Change Pass</button></td>
+          <td><h5>{{data.account_balance}}</h5>
+            <button class="bg-danger text-light">Statement</button>
+        </td>
+        <td><h5>Deposit</h5>
+          <button class="bg-warning" data-bs-toggle="modal" data-bs-target="#exampleModal2" data-bs-whatever="@mdo2" (click)="sendinguser(data)">Deposit</button>
+      </td>
+      <td><h5>Withdraw</h5>
+          <button class="bg-success text-light"  data-bs-toggle="modal" data-bs-target="#exampleModal3" data-bs-whatever="@mdo3" (click)="sendinguser(data)">Withdraw</button>
+      </td>
+        <td>0.00</td>
+        <td>{{data.commission_type}}</td>
+        <td>
+          <button class="bg-danger text-light" *ngIf="data?.account_lock===1" (click)="accountLock(data)">Unlock Account</button>
+          <button class="bg-warning " *ngIf="data?.account_lock===0" (click)="accountLock(data)">Lock Account</button>
+        </td>
+        <td>
+          <button class="bg-danger text-light" *ngIf="data?.bet_lock===1" (click)="betLock(data)">Unlock Bet</button>
+          <button class="bg-warning " *ngIf="data?.bet_lock===0" (click)="betLock(data)">Lock Bet</button>
+        </td>
+        <td><button class="bg-success text-light">Acc. Opertion</button></td>
+        
+      </tr> 
+    </tbody>
+  </table>
+
+<!--change password modal / popup starts-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="passwordForm">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label"><span  class="text-danger">*</span>New Password</label>
+            <input type="password" class="form-control form-control-sm" id="recipient-name" formControlName="newPass" [(ngModel)]="passobj.newPass">
+            <div *ngIf="passwordForm.get('newPass').invalid &&  passwordForm.get('newPass').touched">
+              <div class="text-danger fst-italic" *ngIf="passwordForm.get('newPass').errors?.required">Required</div>
+              <div class="text-danger fst-italic" *ngIf="passwordForm.get('newPass').errors?.minlength">At least 4 characters long</div>
+              <div class="text-danger fst-italic" *ngIf="passwordForm.get('newPass').errors?.maxlength">At most 7 characters long</div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Confirm Password</label>
+            <input type="text" class="form-control form-control-sm" id="recipient-name" formControlName="confirmPass" [(ngModel)]="passobj.changePass">
+            <div *ngIf="passwordForm.get('confirmPass').invalid &&  passwordForm.get('confirmPass').touched">
+              <div class="text-danger fst-italic" *ngIf="passwordForm.get('confirmPass').errors?.required">Required</div>
+              <div class="text-danger fst-italic" *ngIf="passwordForm.get('confirmPass').errors?.minlength">At least 4 characters long</div>
+              <div class="text-danger fst-italic" *ngIf="passwordForm.get('confirmPass').errors?.maxlength">At most 7 characters long</div>
+              <div class="text-danger fst-italic" *ngIf="passwordForm.get('confirmPass').errors?.passwordMismatch">Passwords do not match</div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" #closebtn class="btn btn-secondary" data-bs-dismiss="modal" (click)="close()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="changepassword()" [disabled]="passwordForm.invalid || passwordForm.hasError('passwordMismatch')">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--change password modal / popup ends-->
+
+<!--deposit modal / popup starts-->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: green;">
+        <h5 class="modal-title" id="exampleModalLabel2" style="color: white;" >Deposit Chip</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="coinsForm">
+          <div class="mb-3">
+            <h5 class="depositUsername">To User- <span>{{coinUpdate.user_code}}</span></h5>
+            <section class="coins">
+            <div class="w-50 parent_coins">
+              <h6>Parent Coins:</h6>
+              <h6>{{coinUpdate.parent_account_balance}}</h6>
+            </div>
+            <div class="w-50 users_coins">
+              <h6>Users Coins:</h6>
+              <h6> <h6>{{coinUpdate.account_balance}}</h6></h6>
+            </div>
+          </section>
+          </div>
+          <div class="mb-3">
+            <input type="number"  #deposit class="form-control form-control-sm" placeholder="Enter Coins" id="recipient-name2" formControlName="new_coins" [(ngModel)]="coinUpdate.new_coins"  min="0" onkeyup="if(this.value<0){this.value= this.value * -1}"  (keyup)="dynamicCoins($event)">
+              <div *ngIf="coinsForm.get('new_coins').invalid &&  coinsForm.get('new_coins').touched">
+              <div class="text-danger fst-italic" *ngIf="coinsForm.get('new_coins').errors?.required">Required</div>
+            </div>
+            <div class="text-danger fst-italic" *ngIf="this.parrentaccount < this.coinUpdate.new_coins">Chips can not be greater than parent coin</div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" #closebtn2 class="btn btn-secondary" data-bs-dismiss="modal" (click)="close()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addcoins()" [disabled]="coinsForm.invalid || coinsForm.hasError('new_coins') || disableSubmit">Deposit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--deposit modal / popup ends-->
+
+<!--withdrawl modal / popup start-->
+
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: red;">
+        <h5 class="modal-title" id="exampleModalLabel3" style="color: white;">Withdraw Chip</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="coinsForm">
+          <div class="mb-3">
+            <h5 class="depositUsername">from User- <span>{{coinUpdate.user_code}}</span></h5>
+            <section class="coins">
+            <div class="w-50 parent_coins">
+              <h6>Parent Coins:</h6>
+              <h6>{{coinUpdate.parent_account_balance}}</h6>
+            </div>
+            <div class="w-50 users_coins">
+              <h6>Users Coins:</h6>
+              <h6> <h6>{{coinUpdate.account_balance}}</h6></h6>
+            </div>
+          </section>
+          </div>
+          <div class="mb-3">
+            <input type="number"  #deposit class="form-control form-control-sm" placeholder="Enter Coins" id="recipient-name3" formControlName="new_coins" [(ngModel)]="coinUpdate.new_coins"  min="0" onkeyup="if(this.value<0){this.value= this.value * -1}"  (keyup)="dynamicCoins2($event)">
+              <div *ngIf="coinsForm.get('new_coins').invalid &&  coinsForm.get('new_coins').touched">
+              <div class="text-danger fst-italic" *ngIf="coinsForm.get('new_coins').errors?.required">Required</div>
+            </div>
+            <div class="text-danger fst-italic" *ngIf="this.useraccount < this.coinUpdate.new_coins">Chips can not be greater than users coin</div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" #closebtn3 class="btn btn-secondary" data-bs-dismiss="modal" (click)="close()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="substractCoins()"  [disabled]="coinsForm.invalid || coinsForm.hasError('new_coins') || disableSubmit">Withdraw</button>
+      </div>
+    </div>
+  </div>
+</div>
+

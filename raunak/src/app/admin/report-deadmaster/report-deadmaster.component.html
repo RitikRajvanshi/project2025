@@ -1,0 +1,30 @@
+<h5 class="deadmaster-h5">Select Type</h5>
+<div class="container-fluid my-3">
+<label for="Select Type" class="deadmaster-label">Select Type:</label>
+<select name="Select Type" #selectuser id="Select Type" class="deadmaster-select py-2 px-3" (change)="getusersdataacctolevel(selectuser.value)">
+  <option value="" selected hidden disabled >Select UserType</option>
+    <option value="" *ngFor="let data of levels"  [value]="data.level_id">Dead {{data.level_name}}</option>
+</select>
+</div>
+<table class="table table-bordered">
+<thead>
+  <tr>
+    <th scope="col" class="odd">S.NO.</th>
+    <th scope="col" class="even">ID</th>
+    <th scope="col" class="odd">Name</th>
+    <th scope="col" class="even">Designation</th>
+    <th scope="col" class="odd">DOB</th>
+    <th scope="col" class="even">Action</th>
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let data of usersdataacctolevelandcreatedby; let i = index">
+    <th scope="row"  >{{i+1}}</th>
+    <td>{{data.user_code}}</td>
+    <td>{{data.user_name}}</td>
+    <td>NA</td>
+    <td>NA</td>
+    <td>NA</td>
+  </tr> 
+</tbody>
+</table>
