@@ -1,0 +1,78 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.inplaymaindiv{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0;
+}
+
+.inplayheading{
+    background-color: slategray;
+    color: white;
+    margin: 0;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.inplayheading h3{
+    margin: 0;
+    padding-left: 10px;
+    letter-spacing: 2px;
+}
+
+.cricketball{
+    width: 30px;
+    /* padding: 5px; */
+}
+
+.matchfixture{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color: white;
+    border: 1px solid lightgrey;
+}
+
+.matchname{
+    display: flex;
+    align-items: center;
+    color: blue;
+
+}
+.matchname li{
+    list-style: none;
+}
+.matchname li:nth-child(2){
+    padding-left: 10px;
+}
+.matchdate{
+    display: flex;
+    color: yellowgreen;
+
+}
+.matchdate li{
+    list-style: none;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    padding-right: 5px;
+}
+
+.matchname img{
+    width: 18px;
+}
+
+.matchdate img{
+    width: 10px;
+
+}
+
+.television{
+    width: 30px;
+}

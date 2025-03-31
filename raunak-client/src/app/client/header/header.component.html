@@ -1,0 +1,384 @@
+<!-- Header starts here -->
+<div class="upper-alert">
+  <marquee behavior="" direction="">Welcome to 98Bethub.com</marquee>
+</div>
+<header id="header" class="header fixed-top d-flex align-items-center">
+  <div class="d-flex align-items-center justify-content-between">
+    <i class="bi bi-list toggle-sidebar-btn" style="color: #ffffff;" (click)="toggleSidebar()"></i>
+
+    <a href="index.html" class="logo d-flex align-items-center">
+      <img src="../../assets/images/98BETHUB.png" alt="" height="100px">
+      <span class="d-none d-lg-block" style="color: #ffffff;">98bethub</span>
+    </a>
+    <div class="alert-notification">
+      <div></div>
+      <i class="bi bi-bell-fill alert-notification-icon text-warning"></i>
+      <marquee class="text-danger alert-notification-marquee" behavior="" direction="">Welcome to 98Bethub.</marquee>
+    </div>
+  </div>
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
+      <li class="nav-item dropdown pe-3">
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+          <img src="assets/images/avatar.png" alt="Profile" class="rounded-circle">
+          <span class="d-none d-md-block dropdown-toggle ps-2" style="color: #ffffff;"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6>Hi </h6>
+            <!-- <span>Web Designer</span> -->
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <!-- <li>
+                <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                  <i class="bi bi-person"></i>
+                  <span>My Profile</span>
+                </a>
+              </li> -->
+          <!-- <li>
+                <hr class="dropdown-divider">
+              </li> -->
+          <!-- <li>
+                <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                  <i class="bi bi-gear"></i>
+                  <span>Account Settings</span>
+                </a>
+              </li> -->
+          <!-- <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li> -->
+          <li>
+            <a class="dropdown-item d-flex align-items-center">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Sign Out</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+<div class="secondnav">
+  <ul class="secondnav-ul">
+    <!-- <li class="secondnav-li"><a href=""><i class="bi bi-house-fill"></i> Dashboard</a></li> -->
+    <li class="secondnav-li"><a [routerLink]="['inplay']"><i class="bi bi-play-fill"></i> In-Play</a></li>
+    <li class="secondnav-li"><a [routerLink]="['all-market-book']"><i class="bi bi-bar-chart-line-fill"></i> All Market
+        Book</a></li>
+    <li class="secondnav-li"><a [routerLink]="['profile']"><i class="bi bi-person-circle"></i> Profile</a></li>
+    <li class="secondnav-li"><a [routerLink]="['password']"><i class="bi bi-lock-fill"></i> Password</a></li>
+    <li class="secondnav-li"><a data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+          class="bi bi-info-circle-fill"></i> Rules</a></li>
+    <li class="secondnav-li"><a [routerLink]="['my-commission']"><i class="bi bi-journal-text"></i> My Commission</a>
+    </li>
+    <li class="secondnav-li dropdown"><a><i class="bi bi-journal-text"></i> Report</a>
+      <div class="dropdown-content">
+        <!-- Add dropdown content here -->
+        <a [routerLink]="['account-statement']">Account Statement</a>
+        <a [routerLink]="['total-ledger']">Total Ledger</a>
+        <a [routerLink]="['profit-loss']">Profit & Loss</a>
+        <a [routerLink]="['bet-history']">Bet History</a>
+        <a [routerLink]="['live-bet-history']">Live Bet History</a>
+      </div>
+    </li>
+    <li class="secondnav-li"><a [routerLink]="['edit-stake']"><i class="bi bi-credit-card-2-front-fill"></i> Edit
+        Stake</a></li>
+  </ul>
+</div>
+
+<!--  Header End here-->
+<!-- Sidebar starts here-->
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link " [routerLink]="['dashboard']">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Admin Details</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a [routerLink]="['admin-details']">
+            <i class="bi bi-circle"></i><span>Admin</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['subadmin-details']">
+            <i class="bi bi-circle"></i><span>Sub-Admin</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['minadmin-details']">
+            <i class="bi bi-circle"></i><span>Min-Admin</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['supmaster-details']">
+            <i class="bi bi-circle"></i><span>Super-Master</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['master-details']">
+            <i class="bi bi-circle"></i><span>Master</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['agent-details']">
+            <i class="bi bi-circle"></i><span>Agent</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['client-details']">
+            <i class="bi bi-circle"></i><span>Client</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-journal-text"></i><span>Sports Betting</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a [routerLink]="['allmatches-postion']">
+            <i class="bi bi-circle"></i><span>All Match Position</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['inplay-games']">
+            <i class="bi bi-circle"></i><span>Inplay Games</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['completed-games']">
+            <i class="bi bi-circle"></i><span>Completed Games</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse">
+        <i class="bi bi-layout-text-window-reverse"></i><span>Ledger</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a [routerLink]="['my-ledger']">
+            <i class="bi bi-circle"></i><span>My Ledger</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['lena-dena']">
+            <i class="bi bi-circle"></i><span>Lena and Dena</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-bar-chart"></i><span>Cash Transaction</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a [routerLink]="['debit-credit-a']">
+            <i class="bi bi-circle"></i><span>Debit/Credit(A)</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['debit-credit-suba']">
+            <i class="bi bi-circle"></i><span>Debit/Credit(Sub-A)</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['debit-credit-mina']">
+            <i class="bi bi-circle"></i><span>Debit/Credit(MA)</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['debit-credit-supa']">
+            <i class="bi bi-circle"></i><span>Debit/Credit(SA)</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['debit-credit-ma']">
+            <i class="bi bi-circle"></i><span>Debit/Credit(M)</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['debit-credit-ag']">
+            <i class="bi bi-circle"></i><span>Debit/Credit(AG)</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['debit-credit-cl']">
+            <i class="bi bi-circle"></i><span>Debit/Credit(C)</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-gem"></i><span>Reports</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a [routerLink]="['report-statement']">
+            <i class="bi bi-circle"></i><span>Statement</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['report-details']">
+            <i class="bi bi-circle"></i><span>Report Details</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['report-match']">
+            <i class="bi bi-circle"></i><span>Match Report</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['report-login']">
+            <i class="bi bi-circle"></i><span>Login Report</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['report-deadmaster']">
+            <i class="bi bi-circle"></i><span>Dead Master Report</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" [routerLink]="['block-market']">
+        <i class="bi bi-dash-circle"></i>
+        <span>Block Market</span>
+      </a>
+    </li>
+  </ul>
+</aside>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-warning"
+        style="background-color: white; border-bottom: 1px solid grey; overflow-y: auto;">
+        <h5 class="modal-title" id="exampleModalLabel">98bethub.com Rules</h5>
+      </div>
+
+
+      <div class="modal-body pt-0">
+        <div class="modal-body">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-rounded btn-success me-2" (click)="chooseHindi()" >Hindi</button>
+            <button type="button" class="btn btn-secondary" (click)="chooseEnglish()">English</button>
+          </div>
+        </div>
+        <div id="hindi" *ngIf="togglelanguagehindi">
+          <p>कृपया admin.vanky12.com के नियमों को समझने के लिए यहां कुछ मिनट दें, और अपने अनुसार समझ लें |</p>
+          <ol>
+            <li>लॉग इन करने के बाद अपना पासवर्ड बदलें।</li>
+            <li>प्रत्येक गेम के लिए 0.0/- कॉइन्स चार्ज रहेगा |</li>
+            <li>टेस्ट मैच में प्रतिदिन 0.0/ कॉइन चार्ज रहेगा |</li>
+            <li>एक्स्ट्रा फैंसी पर कमिशन नहीं मिलेगा , जिन फैंसी में No Comm लिखा है उनमे कमिशन नहीं मिलेगा|</li>
+            <li>यदि आप मैच या सेशन का एक भी सौदा नहीं करते हो, ऐसे में आपसे 0.0/- कॉइन्स का चार्ज लिया जायेगा |</li>
+            <li>सभी एडवांस सौदे टॉस के बाद लिए जाएंगे |</li>
+            <li>खेल रद्द या टाई होने पर सभी सौदे रद्द कर दिए जाएंगे और लेनदेन सेशन और फैंसी जो पूरा हो गया है उस पर किया
+              जाएगा | मैच के दौरान सेशन की कंडीशन पर फैंसी का सेटलमेंट कंपनी तय करेगी कंपनी का डिसीजन ही फाइनल होगा|
+            </li>
+            <li>टेस्ट मैच में पार्टनरशिप और प्लेयर रन खराब मौसम और मैच रद्द ( ड्रॉ) होता है तो रिजल्ट उस टाइम जो स्कोर
+              होगा उस हिसाब से डिक्लियर होगा |
+            </li>
+            <li>मैच के लिए सौदे की रकम: मार्केट का प्रकारकम से कम शर्त राशिअधिकतम शर्त राशिमैच कौन जीतेगा500|500000
+              क्रिकेट सेशन500|55000क्रिकेट एकी बेकी100|100000अंक समाप्त मैच का दांव100|100000</li>
+            <li>एकी बेकी में 95 का भाव है |</li>
+            <li>लॉटरी ड्रॉ में 9.5 का भाव है |</li>
+            <li>लाइव ड्रा टीवी स्कोर पर निर्भर है | दर कभी नहीं बदली जाती है | यह यूजर के लिए अच्छा मौका है |
+            </li>
+            <li>मैच के दौरान भाव को देख और समझ कर ही सौदा करें | किये गए किसी भी सौदे को हटाया या बदला नहीं जायेगा | सभी
+              सौदे के लिए आप स्वयं जिम्मेवार हैं |</li>
+            <li>यहाँ सभी सौदे लेजर से मान्य किये जायेंगे |
+            </li>
+            <li>चीटिंग या गलत भाव के सौदे हटा दिए जायेंगे मैच खत्म होने बाद भी।</li>
+            <li>मैच या सेशन भाव गलत चलने पर जो भी मैच या सेशन के सौदे हुए हे वह स्वतः हट जायेंगे। ऐसी स्थिति में किसी भी
+              तरह का वाद-विवाद मान्य नहीं होगा।
+            </li>
+            <li>मैच अबॉण्डेड होने पर जो सेशन, पार्टनरशिप और खिलाडी रनिंग में हे या खिलाडी रिटायर हुआ हो सभी सौदे केंसल
+              हो जायेंगे। और जो सेशन कम्पलीट हे उनके हिसाब से कोइन्स कम या ज्यादा होंगे। और रिजल्ट आने पे जो खिलाडी जहा
+              हे वो ही माने जायेंगे।
+            </li>
+            <li>कंपनी का डिसीज़न ही फाइनल होगा, उस पर कोई क्लेम मान्य नहीं होगा।
+            </li>
+            <li>अगर आप इस एग्रीमेंट को ऐक्सेप्ट नहीं करते हे तो कोई सौदा नहीं कीजिये।
+            </li>
+            <li>इंटरनेट कनेक्शन प्रॉब्लम की जिम्मेवारी आपकी रहेगी |
+            </li>
+          </ol>
+          <p style="font-size: 10px;"><strong>Note:नोट: सर्वर या वेबसाइट में किसी तरह की खराबी आने या बंद हो जाने पर
+              केवल किए गए सौदे ही मान्य होंगे | ऐसी स्तिथि में किसी तरह का वाद-विवाद मान्य नहीं होगा |</strong></p>
+        </div>
+        <div id="english" *ngIf="togglelanguageenglish">
+          <p>Please take a few minutes here to understand the rules of VANKY12, and understand accordingly.</p>
+          <ol>
+            <li>Change your password after you log in.</li>
+            <li>0.0 /- coins will be charged for each game.</li>
+            <li>0.0 /- coin charge will be there per day in test match.</li>
+            <li>No commission will be given on extra fancy, commission will not be available in fancy in which No Comm
+              is written.
+            </li>
+            <li>If you do not make a single deal of match or session, then you will be charged 0.0/- coins.</li>
+            <li>All advance deals will be taken after the toss.
+            </li>
+            <li>In case the game is canceled or tied, all transactions will be canceled and the transaction will be done
+              on the session and fancy that has been completed. During the match, the company will decide the settlement
+              of fancy on the condition of the session, the decision of the company will be final.
+
+            </li>
+            <li>Partnership and player run in test match bad weather and match is canceled (draw) then result will be
+              declared according to the score at that time.
+            </li>
+            <li>Deal amount for the match: Market TypeMinimum Bet AmountMaximum Bet AmountWho Wins the Match500|500000Cricket Sessions500|55000Cricket Aki Becky100|100000 Points Ended Match Bet100|100000
+            </li>
+            <li>Aki Becky has a price of 95.
+            </li>
+            <li>The lottery draw has a value of 9.5.
+            </li>
+            <li>Live draw is dependent on TV score. The rate never changes. This is a good opportunity for the user.
+            </li>
+            <li>Deal only after seeing and understanding the price during the match. Any transaction entered into will not be deleted or replaced. You are responsible for all transactions.
+            </li>
+            <li>All deals here will be validated by ledger.
+
+            </li>
+            <li>Deals of cheating or wrong price will be removed even after the match is over.
+            </li>
+            <li>If the match or session price is incorrect, then whatever match or session has been traded will be automatically removed. In such a case, any dispute will not be valid.
+
+            </li>
+            <li>All transactions for sessions, partnerships and players who are in running or retired players will be canceled when the match is terminated. And the coins will be more or less according to the session which is complete. And when the result comes, the players who are where they are will be considered.
+
+            </li>
+            <li>The decision of the company will be final, no claim will be accepted on it.
+
+            </li>
+            <li>If you do not accept this agreement then do not do any deal.
+            </li>
+            <li>You will be responsible for internet connection problem.
+
+            </li>
+          </ol>
+          <p style="font-size: 10px;"><strong>Note: Transactions made will be valid only in case of server or website failure or shutdown. In such a case, any kind of debate will not be valid.</strong></p>
+        </div>
+      </div>
+      <div class="modal-footer sticky-bottom bg-light">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="container m-auto mt-4 inplaymaindiv">
+    <div class="inplayheading">
+    <img src="../../../assets/images/cricket.png" alt="" class="cricketball">
+    <h3 class="">Cricket</h3>
+    </div>
+    <div class="matchfixture"  *ngFor="let items of matchesdata">
+        <div class="matchnamemain" >
+            <ul class="matchname">
+                <li><img src="../../../assets/images/soccer-jersey.png" alt=""></li>
+                <li><a [routerLink]="['/client/inplay-live',items?.event_key]" (click)="sendingMatchdata(items)">{{items.event_away_team}} vs {{items.event_home_team}}</a></li>
+            </ul>
+            <ul class="matchdate">
+                <li><img src="../../../assets/images/clock.png" alt=""></li>
+                <li>{{items.event_date_start}}</li>
+                <li><img src="../../../assets/images/star.png" alt=""></li>
+            </ul>
+        </div>
+        <img src="../../../assets/images/television.png" alt="" class="television">
+
+    </div>
+    <!-- <div class="matchfixture">
+        <div class="matchnamemain">
+            <ul class="matchname">
+                <li><img src="../../../assets/images/soccer-jersey.png" alt=""></li>
+                <li>Chennai Super Kings vs Mumbai Indian</li>
+            </ul>
+            <ul class="matchdate">
+                <li><img src="../../../assets/images/clock.png" alt=""></li>
+                <li>12/04/2024</li>
+                <li><img src="../../../assets/images/star.png" alt=""></li>
+            </ul>
+        </div>
+        <img src="../../../assets/images/television.png" alt="" class="television">
+
+    </div>
+    <div class="matchfixture">
+        <div class="matchnamemain">
+            <ul class="matchname">
+                <li><img src="../../../assets/images/soccer-jersey.png" alt=""></li>
+                <li>Indian Premier League</li>
+            </ul>
+            <ul class="matchdate">
+                <li><img src="../../../assets/images/clock.png" alt=""></li>
+                <li>12/04/2024</li>
+                <li><img src="../../../assets/images/star.png" alt=""></li>
+            </ul>
+        </div>
+        <img src="../../../assets/images/television.png" alt="" class="television">
+
+    </div>
+    <div class="matchfixture">
+        <div class="matchnamemain">
+            <ul class="matchname">
+                <li><img src="../../../assets/images/soccer-jersey.png" alt=""></li>
+                <li>Kolkata Night Riders Vs Lucknow Super Gaints</li>
+            </ul>
+            <ul class="matchdate">
+                <li><img src="../../../assets/images/clock.png" alt=""></li>
+                <li>12/04/2024</li>
+                <li><img src="../../../assets/images/star.png" alt=""></li>
+            </ul>
+        </div>
+        <img src="../../../assets/images/television.png" alt="" class="television">
+
+    </div> -->
+</div>

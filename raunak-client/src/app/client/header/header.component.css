@@ -1,0 +1,166 @@
+.alert-notification{
+    display: flex;
+    margin-left: 30px;
+    background-color: white;
+    border-radius: 20px;
+    width: 400px;
+    align-items: center;
+}
+.alert-notification-icon{
+    padding: 0px 5px 0px 5px;
+}
+
+/* .upper-alert{
+    display: none;
+
+} */
+
+.alert-notification-marquee{
+    padding: 0px 5px 0px 5px;
+}
+
+.secondnav{
+    position: fixed;
+    top: 60px;
+    width: 100%;
+    background-color: black;
+    z-index: 5000;
+}
+
+.secondnav-ul{
+    display: flex;
+    width: 85%;
+    margin: 0;
+    padding: 0;
+    /* padding: 5px; */
+}
+
+/* CSS */
+.secondnav-ul {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+  }
+  
+  .commission-li {
+    margin-left: 10px; /* Adjust as needed */
+  }
+.secondnav-li{
+    flex: 1;
+    display: block;
+    list-style: none;
+    text-align: center;
+    font-size: 13px;
+    /* padding: 0 20px 0 20px; */
+}
+
+.secondnav-li a {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    color: #fff; 
+  }
+
+
+.secondnav-li :hover{
+    background-color: white;
+    color: black;
+    }
+
+    #sidebar{
+        display: none;
+    }
+
+    .toggle-sidebar-btn{
+        display: none;
+    }
+
+    .dropdown {
+        position: relative !important;
+      }
+      
+      .dropdown-content {
+        display: none;
+        position: absolute !important;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        z-index: 999;
+        text-align: left;
+      }
+      
+      .dropdown-content a {
+        color: black;
+        padding: 8px 16px;
+        font-size: 12px;
+        text-decoration: none;
+        display: block;
+        border-bottom: 1px solid rgb(236, 235, 235);
+      }
+      
+      .dropdown-content a:hover {
+        background-color: #f1f1f1;
+      }
+      
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      #exampleModal{
+        font-size:14px;
+      }
+
+      .secondnav-li.dropdown:hover .dropdown-menu {
+        display: block;
+      }
+
+
+
+@media only screen and (max-width: 800px) {
+    /* Your CSS rules for mobile devices here */
+    .alert-notification{
+    display: none;
+    }
+    .fixed-top{
+        position: fixed;
+        top: 20px;
+    }
+    .upper-alert{
+        background-color: white;
+
+    }
+    .alert-notification-marquee{
+        font-size: 13px;
+    }
+    .container {
+      width: 100%;
+      padding: 10px;
+    }
+
+    .secondnav{
+        display: none;
+    }
+
+    #sidebar{
+        display: flex;
+    }
+
+    .toggle-sidebar-btn{
+        display: flex;
+        padding-right: 15px;
+    }
+
+    #header{
+        padding-left: 0;
+      
+    } 
+  }
+
+@media only screen and (max-width: 1200px){
+  .secondnav-li{
+    font-size: 11px;
+  }
+  .secondnav-ul{
+    width: 100%;
+  }
+
+}   
+  
