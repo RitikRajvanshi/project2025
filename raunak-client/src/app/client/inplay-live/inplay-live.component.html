@@ -4,18 +4,19 @@
         <div class="matchscore">
             <div class="matchscoreheading" *ngIf="matchData && matchData.length > 0">
                 <ul class="matchscoreheadingul">
-                    <li class="matchscoreheadingli">{{matchData[0]?.event_away_team}} vs {{matchData[0]?.event_home_team}}</li>
+                    <!-- <li class="matchscoreheadingli">{{matchData[0]?.event_away_team}} vs {{matchData[0]?.event_home_team}}</li> -->
+                    <li class="matchscoreheadingli">{{matchData[0]?.matchInfo.series}}</li>
                     <li class="matchscoreheadingli">Matches</li>
                 </ul>
                 <div class="scorecard">
                   <div class="scorecard-left">
                       <ul class="teamname1">
-                        <li class="teamname1li">{{matchData[0]?.event_away_team}}</li>
-                        <li class="teamname1li">{{matchData[0]?.event_away_final_result?matchData[0]?.event_away_final_result:'0/0(0.0)'}}</li>
+                        <li class="teamname1li">{{matchData[0]?.liveScore.battingTeam.name}}</li>
+                        <li class="teamname1li">{{matchData[0]?.liveScore.battingTeam.runs}}/{{matchData[0]?.liveScore.battingTeam.wickets}} ({{matchData[0]?.liveScore.battingTeam.overs}})</li>
                       </ul>
                         <ul class="teamname2">
-                          <li class="teamname2li">{{matchData[0]?.event_home_team}}</li>
-                          <li class="teamname2li">{{matchData[0]?.event_home_final_result?matchData[0]?.event_home_final_result:'0/0(0.0)'}}</li>
+                          <li class="teamname2li">{{matchData[0]?.liveScore.bowlingTeam.name}}</li>
+                          <li class="teamname2li">{{matchData[0]?.liveScore.bowlingTeam.runs}}/{{matchData[0]?.liveScore.bowlingTeam.wickets}} ({{matchData[0]?.liveScore.bowlingTeam.overs}})</li>
                         </ul>
                     <h5 class="crr">CRR(NaN)</h5>
                     <div class="battingstats">

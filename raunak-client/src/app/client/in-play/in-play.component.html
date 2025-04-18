@@ -1,21 +1,24 @@
 <div class="container m-auto mt-4 inplaymaindiv">
     <div class="inplayheading">
-    <img src="../../../assets/images/cricket.png" alt="" class="cricketball">
+    <!-- <img src="../../../assets/images/cricket.png" alt="" class="cricketball"> -->
+    <img src="/#/assets/images/cricket.png" alt="" class="cricketball">
     <h3 class="">Cricket</h3>
     </div>
     <div class="matchfixture"  *ngFor="let items of matchesdata">
         <div class="matchnamemain" >
             <ul class="matchname">
-                <li><img src="../../../assets/images/soccer-jersey.png" alt=""></li>
-                <li><a [routerLink]="['/client/inplay-live',items?.event_key]" (click)="sendingMatchdata(items)">{{items.event_away_team}} vs {{items.event_home_team}}</a></li>
+                <li><img src="/#/assets/images/soccer-jersey.png" alt=""></li>
+
+                <li><a [routerLink]="['/client/inplay-live',items?.matchInfo.matchId]" (click)="sendingMatchdata(items)">{{items.matchInfo.series}}</a></li>
+
             </ul>
             <ul class="matchdate">
-                <li><img src="../../../assets/images/clock.png" alt=""></li>
+                <li><img src="/#/assets/images/clock.png" alt=""></li>
                 <li>{{items.event_date_start}}</li>
-                <li><img src="../../../assets/images/star.png" alt=""></li>
+                <li><img src="/#/assets/images/star.png" alt=""></li>
             </ul>
         </div>
-        <img src="../../../assets/images/television.png" alt="" class="television">
+        <img src="/#/assets/images/television.png" alt="" class="television">
 
     </div>
     <!-- <div class="matchfixture">

@@ -21,6 +21,7 @@ export class InplayLiveComponent {
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       this.matchId = params.get('id');
+      console.log(this.matchId, "matchId");
       if (this.matchId) {
         this.startFetchingLiveData();
         this.getothersData();
@@ -34,6 +35,23 @@ export class InplayLiveComponent {
     }
   }
 
+  // startFetchingLiveData() {
+  //   this.subscription = interval(5000) // Fetch data every 5 seconds
+  //     .pipe(
+  //       switchMap(() => this.getMatchData())
+  //     )
+  //     .subscribe(
+  //       data => {
+  //         console.log(data);
+  //         this.liveData = data.result[0].comments.Live; // Assuming the data is an array of objects
+  //         console.log(this.liveData, "livedata");
+  //       },
+  //       error => {
+  //         console.error('Error fetching live data', error);
+  //       }
+  //     );
+  // }
+
   startFetchingLiveData() {
     this.subscription = interval(5000) // Fetch data every 5 seconds
       .pipe(
@@ -42,7 +60,8 @@ export class InplayLiveComponent {
       .subscribe(
         data => {
           console.log(data);
-          this.liveData = data.result[0].comments.Live; // Assuming the data is an array of objects
+          // this.liveData = data.result[0].comments.Live; // Assuming the data is an array of objects
+          this.liveData = data.liveScore; // Assuming the data is an array of objects
           console.log(this.liveData, "livedata");
         },
         error => {
@@ -51,36 +70,57 @@ export class InplayLiveComponent {
       );
   }
 
-  async getMatchData(): Promise<any> {
-    const url = `http://localhost:3000/client/specific-match`;
-    if (this.matchId) {
-      const matchId = {
-        match_id: +this.matchId
-      };
+  // async getMatchData(): Promise<any> {
+  //   const url = `http://localhost:3000/client/specific-match`;
+  //   if (this.matchId) {
+  //     const matchId = {
+  //       match_id: +this.matchId
+  //     };
 
-      return await this.http.post(url, matchId).toPromise();
+  //     return await this.http.post(url, matchId).toPromise();
+  //   }
+  //   return { result: [] };
+  // }
+
+  async getMatchData(): Promise<any> {
+    const url = `http://localhost:3000/client/all-matches`;
+    // if (this.matchId) {
+    //   const matchId = {
+    //     match_id: +this.matchId
+    //   };
+
+    const result:any =  await this.http.get(url).toPromise();
+    return result.filter((specificData:any)=>
+      {
+        return specificData.matchInfo.matchId == this.matchId;
+      }
+      );
     }
-    return { result: [] };
-  }
+
+  // async getothersData() {
+  //   const url = `http://localhost:3000/client/specific-match`;
+  //   if (this.matchId) {
+  //     const matchId = {
+  //       match_id: +this.matchId
+  //     };
+
+  //     const results:any= await this.http.post(url, matchId).toPromise();
+  //     console.log(results.result, "results");
+  //     this.matchData = results?.result ;
+  //   }
+    
+  // }
 
   async getothersData() {
-    const url = `http://localhost:3000/client/specific-match`;
-    if (this.matchId) {
-      const matchId = {
-        match_id: +this.matchId
-      };
-
-      const results:any= await this.http.post(url, matchId).toPromise();
-      console.log(results.result, "results");
-      this.matchData = results?.result ;
-    }
+    const url =`http://localhost:3000/client/all-matches`;     
+    const results:any = await this.http.get(url).toPromise();
     
-  }
-
+    this.matchData = results.filter((specificData:any)=>
+    {
+      return specificData.matchInfo.matchId == this.matchId;
+    }
+    );
+    console.log(this.matchData, "results");
+    }
+  
 }
-
-
-
-
-
-

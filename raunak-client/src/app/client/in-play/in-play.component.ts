@@ -25,8 +25,8 @@ export class InPlayComponent {
     try{
         const url =`http://localhost:3000/client/all-matches`;     
         const results:any = await this.http.get(url).toPromise();
-        this.matchesdata = results.result;
-        console.log(results.result, "results");
+        this.matchesdata = results;
+        console.log(results, "results");
       
     }
     catch(err){
@@ -35,7 +35,9 @@ export class InPlayComponent {
   }
 
   sendingMatchdata(data:any){
-    this.userservice.changeMatch(data);
+    // console.log(data.matchInfo.matchId, "matchInfo");
+    // this.userservice.changeMatch(data.matchInfo.matchId);
+    console.info(data);
   }
 
 }
