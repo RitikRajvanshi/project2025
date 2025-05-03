@@ -1,233 +1,209 @@
 [
   {
     "matchInfo": {
-      "matchId": 101,
-      "series": "India vs Australia T20 Series 2025",
-      "venue": "Wankhede Stadium, Mumbai",
-      "date": "2025-04-18",
+      "series": "T20 Series 2025",
+      "matchId": 100,
+      "team1": "England",
+      "team2": "South Africa",
+      "date": "2025-04-25",
       "time": "19:00 IST",
-      "status": "Completed",
-      "inning": 1
+      "venue": "Green Park Stadium, Kanpur",
+      "status": "Upcoming"
+    }
+  },
+  {
+    "matchInfo": {
+      "series": "ODI Championship 2025",
+      "matchId": 101,
+      "team1": "New Zealand",
+      "team2": "Pakistan",
+      "date": "2025-05-01",
+      "time": "14:30 IST",
+      "venue": "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow",
+      "status": "Upcoming"
+    }
+  },
+  {
+    "matchInfo": {
+      "series": "IPL 2025",
+      "matchId": 102,
+      "team1": "Mumbai Indians",
+      "team2": "Chennai Super Kings",
+      "squad1": [
+        "Rohit Sharma",
+        "Ishan Kishan",
+        "Suryakumar Yadav",
+        "Tilak Varma",
+        "Hardik Pandya",
+        "Tim David",
+        "Piyush Chawla",
+        "Jasprit Bumrah",
+        "Gerald Coetzee",
+        "Akash Madhwal",
+        "Shreyas Gopal"
+      ],
+      "squad2": [
+        "Ruturaj Gaikwad",
+        "Devon Conway",
+        "Ajinkya Rahane",
+        "Shivam Dube",
+        "Ravindra Jadeja",
+        "MS Dhoni",
+        "Sameer Rizvi",
+        "Shardul Thakur",
+        "Deepak Chahar",
+        "Matheesha Pathirana",
+        "Tushar Deshpande"
+      ],
+      "overs": 20,
+      "date": "2025-04-19",
+      "time": "14:00 IST",
+      "venue": "Wankhede Stadium, Mumbai",
+      "status": "Completed"
     },
     "liveScore": {
       "battingTeam": {
-        "name": "India",
-        "runs": 98,
+        "name": "Mumbai Indians",
+        "runs": 208,
         "wickets": 3,
-        "overs": 19,
+        "overs": "0",
         "batsmen": [
           {
-            "name": "Suryakumar Yadav",
-            "runs": 45,
-            "balls": 26,
-            "fours": 5,
-            "sixes": 2,
+            "name": "Shreyas G opal",
+            "runs": 0,
+            "balls": 0,
+            "fours": 0,
+            "sixes": 0,
             "onStrike": false,
-            "notOut": true,
-            "out": true,
-            "dismissal": "b. Pat Cummins"
+            "notOut": false,
+            "out": true
           },
           {
-            "name": "Rinku Singh",
-            "runs": 18,
-            "balls": 12,
-            "fours": 2,
+            "name": "Ishan Kishan",
+            "runs": 208,
+            "balls": 64,
+            "fours": 0,
             "sixes": 0,
             "onStrike": true,
-            "notOut": true
-          }
-        ]
-      },
-      "bowlingTeam": {
-        "name": "Australia",
-        "bowlers": [
-          {
-            "name": "Pat Cummins",
-            "overs": 2,
-            "maidens": 0,
-            "runsConceded": 19,
-            "wicketsTaken": 1
+            "notOut": true,
+            "out": false
           },
           {
-            "name": "Adam Zampa",
-            "overs": 3,
-            "maidens": 0,
-            "runsConceded": 21,
-            "wicketsTaken": 1
-          }
-        ]
-      }
-    },
-    "lastWicket": {
-      "batsman": "Virat Kohli",
-      "bowler": "Pat Cummins",
-      "score": "52-2",
-      "over": 6.4
-    },
-    "recentBalls": [
-      {
-        "over": 11.1,
-        "bowler": "Adam Zampa",
-        "batsman": "Suryakumar Yadav",
-        "result": "4 runs"
-      },
-      {
-        "over": 11.2,
-        "bowler": "Adam Zampa",
-        "batsman": "Suryakumar Yadav",
-        "result": "1 run"
-      },
-      {
-        "over": 11.3,
-        "bowler": "Adam Zampa",
-        "batsman": "Rinku Singh",
-        "result": "1 run"
-      },
-      {
-        "over": 19,
-        "bowler": "Pat Cummins",
-        "batsman": "Suryakumar Yadav",
-        "result": "Wicket"
-      }
-    ],
-    "partnership": {
-      "batsmen": [
-        "Suryakumar Yadav",
-        "Rinku Singh"
-      ],
-      "runs": 30,
-      "balls": 22
-    }
-  },
-  {
-    "matchInfo": {
-      "matchId": 102,
-      "series": "Pakistan vs South Africa T20 Series 2025",
-      "venue": "Gaddafi Stadium, Lahore",
-      "date": "2025-04-18",
-      "time": "20:00 PKT",
-      "status": "Completed",
-      "inning": 2
-    },
-    "liveScore": {
-      "battingTeam": {
-        "name": "South Africa",
-        "runs": 89,
-        "wickets": 4,
-        "overs": 15.2,
-        "batsmen": [
-          {
-            "name": "David Miller",
-            "runs": 28,
-            "balls": 17,
-            "fours": 2,
-            "sixes": 2,
+            "name": "Suryakumar Yadav",
+            "runs": 0,
+            "balls": 0,
+            "fours": 0,
+            "sixes": 0,
             "onStrike": true,
-            "notOut": true
+            "notOut": true,
+            "out": false
           },
           {
-            "name": "Heinrich Klaasen",
-            "runs": 12,
-            "balls": 8,
-            "fours": 1,
-            "sixes": 1,
-            "onStrike": false,
-            "notOut": true
+            "name": "Tilak Varma",
+            "runs": 0,
+            "balls": 0,
+            "fours": 0,
+            "sixes": 0,
+            "onStrike": true,
+            "notOut": true,
+            "out": false
+          },
+          {
+            "name": "Hardik Pandya",
+            "runs": 0,
+            "balls": 0,
+            "fours": 0,
+            "sixes": 0,
+            "onStrike": true,
+            "notOut": true,
+            "out": false
+          },
+          {
+            "name": "Tim David",
+            "runs": 0,
+            "balls": 0,
+            "fours": 0,
+            "sixes": 0,
+            "onStrike": true,
+            "notOut": true,
+            "out": false
+          },
+          {
+            "name": "Piyush Chawla",
+            "runs": 0,
+            "balls": 0,
+            "fours": 0,
+            "sixes": 0,
+            "onStrike": true,
+            "notOut": true,
+            "out": false
+          },
+          {
+            "name": "Jasprit Bumrah",
+            "runs": 0,
+            "balls": 0,
+            "fours": 0,
+            "sixes": 0,
+            "onStrike": true,
+            "notOut": true,
+            "out": false
           }
         ]
       },
       "bowlingTeam": {
-        "name": "Pakistan",
+        "name": "Chennai Super Kings",
         "bowlers": [
           {
-            "name": "Shaheen Afridi",
-            "overs": 2,
+            "name": "Deepak Chahar",
+            "overs": "0",
             "maidens": 0,
-            "runsConceded": 18,
-            "wicketsTaken": 1
+            "runsConceded": 0,
+            "wicketsTaken": 0,
+            "ballsBowled": 0
           },
           {
-            "name": "Shadab Khan",
-            "overs": 2,
+            "name": "Shardul Thakur",
+            "overs": "0",
             "maidens": 0,
-            "runsConceded": 14,
-            "wicketsTaken": 1
+            "runsConceded": 0,
+            "wicketsTaken": 0,
+            "ballsBowled": 0
           }
         ]
       }
     },
-    "lastWicket": {
-      "batsman": "Aiden Markram",
-      "bowler": "Shadab Khan",
-      "score": "65-4",
-      "over": 6.3
-    },
+    "availableBatsmen": [],
     "recentBalls": [
       {
-        "over": 8.4,
-        "bowler": "Shaheen Afridi",
-        "batsman": "David Miller",
-        "result": "6 runs"
+        "over": "0",
+        "batsman": "Shreyas G opal",
+        "result": "Wicket"
       },
       {
-        "over": 8.5,
-        "bowler": "Shaheen Afridi",
-        "batsman": "David Miller",
-        "result": "1 run"
+        "over": "0",
+        "batsman": "Ishan Kishan",
+        "result": "6 run(s)"
       },
       {
-        "over": 8.6,
-        "bowler": "Shaheen Afridi",
-        "batsman": "Heinrich Klaasen",
-        "result": "1 run"
-      },
-      {
-        "over": 15.2,
-        "bowler": "Shaheen Afridi",
-        "batsman": "David Miller",
+        "over": "0",
+        "batsman": "Ishan Kishan",
         "result": "0 run(s)"
+      },
+      {
+        "over": "0",
+        "batsman": "Ishan Kishan",
+        "result": "5 run(s)"
+      },
+      {
+        "over": "0",
+        "batsman": "Ishan Kishan",
+        "result": "1 run(s)"
+      },
+      {
+        "over": "0",
+        "batsman": "Ishan Kishan",
+        "result": "3 run(s)"
       }
-    ],
-    "partnership": {
-      "batsmen": [
-        "David Miller",
-        "Heinrich Klaasen"
-      ],
-      "runs": 24,
-      "balls": 16
-    }
-  },
-  {
-    "matchInfo": {
-      "matchId": 103,
-      "series": "New Zealand vs Pakistan T20 Series 2025",
-      "venue": "Eden Park, Auckland",
-      "date": "2025-04-20",
-      "time": "19:00 NZST",
-      "status": "Upcoming",
-      "inning": null
-    }
-  },
-  {
-    "matchInfo": {
-      "matchId": 104,
-      "series": "India vs England ODI Series 2025",
-      "venue": "M. Chinnaswamy Stadium, Bengaluru",
-      "date": "2025-04-22",
-      "time": "14:00 IST",
-      "status": "Upcoming",
-      "inning": null
-    }
-  },
-  {
-    "matchInfo": {
-      "matchId": 105,
-      "series": "West Indies vs Sri Lanka ODI Series 2025",
-      "venue": "Kensington Oval, Bridgetown",
-      "date": "2025-04-25",
-      "time": "09:30 AST",
-      "status": "Upcoming",
-      "inning": null
-    }
+    ]
   }
 ]
