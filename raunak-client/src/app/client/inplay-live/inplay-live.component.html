@@ -2,23 +2,23 @@
   <div class="mainleft">
     <div class="oddspage">
         <div class="matchscore">
-            <div class="matchscoreheading" *ngIf="matchData && matchData.length > 0">
+            <div class="matchscoreheading" >
                 <ul class="matchscoreheadingul">
                     <!-- <li class="matchscoreheadingli">{{matchData[0]?.event_away_team}} vs {{matchData[0]?.event_home_team}}</li> -->
-                    <li class="matchscoreheadingli">{{matchData[0]?.matchInfo.series}}</li>
+                    <li class="matchscoreheadingli">{{matchData?.matchInfo.series}}</li>
                     <li class="matchscoreheadingli">Matches</li>
                 </ul>
                 <div class="scorecard">
                   <div class="scorecard-left">
                       <ul class="teamname1">
-                        <li class="teamname1li">{{matchData[0]?.liveScore.battingTeam.name}}</li>
-                        <li class="teamname1li">{{matchData[0]?.liveScore.battingTeam.runs}}/{{matchData[0]?.liveScore.battingTeam.wickets}} ({{matchData[0]?.liveScore.battingTeam.overs}})</li>
+                        <li class="teamname1li">{{matchData?.liveScore?.battingTeam?.name}}</li>
+                        <li class="teamname1li">{{matchData?.liveScore?.battingTeam?.runs ? matchData?.liveScore?.battingTeam?.runs : '0'}}/{{matchData?.liveScore?.battingTeam?.wickets ? matchData?.liveScore?.battingTeam?.wickets : '0'}} ({{matchData?.liveScore.battingTeam.overs ? matchData?.liveScore.battingTeam.overs : '0'}})</li>
                       </ul>
                         <ul class="teamname2">
-                          <li class="teamname2li">{{matchData[0]?.liveScore.bowlingTeam.name}}</li>
-                          <li class="teamname2li">{{matchData[0]?.liveScore.bowlingTeam.runs}}/{{matchData[0]?.liveScore.bowlingTeam.wickets}} ({{matchData[0]?.liveScore.bowlingTeam.overs}})</li>
+                          <li class="teamname2li">{{matchData?.liveScore.bowlingTeam.name}}</li>
+                          <li class="teamname2li">{{matchData?.liveScore.bowlingTeam.runs?matchData?.liveScore.bowlingTeam.runs:'0'}}/{{matchData?.liveScore.bowlingTeam.wickets ? matchData?.liveScore.bowlingTeam.wickets : '0'}} ({{matchData?.liveScore.bowlingTeam.overs ? matchData?.liveScore.bowlingTeam.overs :'0'}})</li>
                         </ul>
-                    <h5 class="crr">CRR(NaN)</h5>
+                    <h5 class="crr">CRR</h5>
                     <div class="battingstats">
                         <h5 class="battingstatsh2">BATTING STATS</h5>
                         <ul class="battingstatsul">
