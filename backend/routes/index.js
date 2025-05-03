@@ -1,6 +1,7 @@
 var express = require('express');
 const db = require('../dbconfig');
 var router = express.Router();
+const liveScore = require('../livescore.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -38,6 +39,13 @@ router.get('/', function(req, res, next) {
 //     res.status(500).json({ error: 'Internal server error' });
 //   }
 // });
+
+router.get('/live-score', (req, res) => {
+  console.log(liveScore, "liveScore")
+  const liveMatches = liveScore.filter(match => match.matchInfo.status === "Live");
+  console.log(liveMatches);
+  res.json(liveScore);
+});
 
 
 
