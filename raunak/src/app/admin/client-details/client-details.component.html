@@ -126,11 +126,11 @@
           </section>
           </div>
           <div class="mb-3">
-            <input type="number"  #deposit class="form-control form-control-sm" placeholder="Enter Coins" id="recipient-name2" formControlName="new_coins" [(ngModel)]="coinUpdate.new_coins"  min="0" onkeyup="if(this.value<0){this.value= this.value * -1}"  (keyup)="dynamicCoins($event)">
+            <input type="number"  #deposit class="form-control form-control-sm" placeholder="Enter Coins" id="recipient-name2" formControlName="new_coins"   min="0" onkeyup="if(this.value<0){this.value= this.value * -1}"  >
               <div *ngIf="coinsForm.get('new_coins').invalid &&  coinsForm.get('new_coins').touched">
               <div class="text-danger fst-italic" *ngIf="coinsForm.get('new_coins').errors?.required">Required</div>
             </div>
-            <div class="text-danger fst-italic" *ngIf="this.parrentaccount < this.coinUpdate.new_coins">Chips can not be greater than parent coin</div>
+            <div class="text-danger fst-italic" *ngIf="parrentaccount < coinUpdate.new_coins">Chips can not be greater than parent coin</div>
           </div>
         </form>
       </div>

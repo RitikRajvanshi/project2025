@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { debounceTime } from 'rxjs/operators';
 import { Component , ViewChild, ElementRef} from '@angular/core';
 
 
@@ -56,6 +57,12 @@ export class ClientDetailsComponent {
     }
     this.changePass();
     this.addcoinsform();
+      this.coinsForm.get('new_coins')?.valueChanges
+    .pipe(debounceTime(500))
+    .subscribe((value:any) => {
+      const newCoins = Number(value);
+      this.processCoinUpdate(newCoins);
+    });
 
   }
 
@@ -210,16 +217,29 @@ export class ClientDetailsComponent {
   }
 
  dynamicCoins(event: Event){
-  if(this.parrentaccount < this.coinUpdate.new_coins){
+  const newCoins:any = Number(this.coinsForm.get('new_coins').value);
+  
+  if(this.parrentaccount < newCoins){
     event.preventDefault();
     this.disableSubmit = true;    
   }
-  else{
-    this.disableSubmit = false;
-    this.coinUpdate.parent_account_balance = this.parrentaccount -  this.coinUpdate.new_coins;
-    this.coinUpdate.account_balance = this.useraccount +  this.coinUpdate.new_coins;
-  }
+  this.processCoinUpdate(newCoins);
  }
+
+ processCoinUpdate(newCoins: number) {
+  if (this.parrentaccount < newCoins) {
+    this.disableSubmit = true;
+  } else {
+    this.disableSubmit = false;
+
+    const Accountbalance:any = Number(this.parrentaccount) - newCoins;
+    const newAccountbalance:any = Number(this.useraccount) + newCoins;
+
+    this.coinUpdate.parent_account_balance = +Accountbalance.toFixed(2);
+    this.coinUpdate.account_balance = +newAccountbalance.toFixed(2);
+  }
+}
+
 
  
 dynamicCoins2(event: Event){
