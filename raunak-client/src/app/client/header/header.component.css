@@ -23,8 +23,11 @@
     position: fixed;
     top: 60px;
     width: 100%;
-    background-color: black;
-    z-index: 5000;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
+    border: 1px solid rgba(1, 41, 112, 0.3);
+
+    z-index: 1050;
 }
 
 .secondnav-ul{
@@ -49,7 +52,8 @@
     display: block;
     list-style: none;
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 400;
     /* padding: 0 20px 0 20px; */
 }
 
@@ -57,7 +61,7 @@
     display: block;
     padding: 5px;
     text-decoration: none;
-    color: #fff; 
+    color: #4f4f4f; 
   }
 
 

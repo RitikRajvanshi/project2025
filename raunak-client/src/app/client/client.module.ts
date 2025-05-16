@@ -18,6 +18,8 @@ import { EditStakeComponent } from './edit-stake/edit-stake.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { InplayLiveComponent } from './inplay-live/inplay-live.component';
+import { TestComponent } from './test/test.component';
+import { Test2Component } from './test2/test2.component';
 
 
 
@@ -36,7 +38,9 @@ import { InplayLiveComponent } from './inplay-live/inplay-live.component';
     BetHistoryComponent,
     LiveBetHistoryComponent,
     EditStakeComponent,
-    InplayLiveComponent
+    InplayLiveComponent,
+    TestComponent,
+    Test2Component,
   ],
   exports:[HeaderComponent],
 

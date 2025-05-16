@@ -12,7 +12,7 @@
     </a>
     <div class="alert-notification">
       <div></div>
-      <i class="bi bi-bell-fill alert-notification-icon text-warning"></i>
+      <i class="bi bi-bell-fill alert-notification-icon "></i>
       <marquee class="text-danger alert-notification-marquee" behavior="" direction="">Welcome to 98Bethub.</marquee>
     </div>
   </div>
@@ -74,6 +74,10 @@
     <li class="secondnav-li"><a data-bs-toggle="modal" data-bs-target="#exampleModal"><i
           class="bi bi-info-circle-fill"></i> Rules</a></li>
     <li class="secondnav-li"><a [routerLink]="['my-commission']"><i class="bi bi-journal-text"></i> My Commission</a>
+    </li>
+    <li class="secondnav-li"><a [routerLink]="['test']"><i class="bi bi-journal-text"></i> Test</a>
+    </li>
+    <li class="secondnav-li"><a [routerLink]="['test2']"><i class="bi bi-journal-text"></i> Test2</a>
     </li>
     <li class="secondnav-li dropdown"><a><i class="bi bi-journal-text"></i> Report</a>
       <div class="dropdown-content">
@@ -274,12 +278,12 @@
 
 
       <div class="modal-body pt-0">
-        <div class="modal-body">
+        <!-- <div class="modal-body"> -->
           <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-rounded btn-success me-2" (click)="chooseHindi()" >Hindi</button>
             <button type="button" class="btn btn-secondary" (click)="chooseEnglish()">English</button>
           </div>
-        </div>
+        <!-- </div> -->
         <div id="hindi" *ngIf="togglelanguagehindi">
           <p>कृपया admin.vanky12.com के नियमों को समझने के लिए यहां कुछ मिनट दें, और अपने अनुसार समझ लें |</p>
           <ol>

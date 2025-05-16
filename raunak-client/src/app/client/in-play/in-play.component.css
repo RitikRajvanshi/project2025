@@ -4,25 +4,30 @@
 }
 
 .inplaymaindiv{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 5px;
     padding: 0;
 }
 
 .inplayheading{
-    background-color: slategray;
-    color: white;
+    background-color: #dfdfe0;
+    color: rgb(85, 85, 85);
     margin: 0;
     display: flex;
     justify-content: left;
     align-items: center;
     padding-left: 20px;
+    
 }
 
 .inplayheading h3{
     margin: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: 10px;
     letter-spacing: 2px;
+    font-weight: 500;
+    font-size:32px;
 }
 
 .cricketball{

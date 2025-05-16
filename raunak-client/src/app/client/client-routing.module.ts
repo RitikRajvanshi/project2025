@@ -13,6 +13,8 @@ import { ProfitLossComponent } from './profit-loss/profit-loss.component';
 import { BetHistoryComponent } from './bet-history/bet-history.component';
 import { LiveBetHistoryComponent } from './live-bet-history/live-bet-history.component';
 import { InplayLiveComponent } from './inplay-live/inplay-live.component';
+import { TestComponent } from './test/test.component';
+import { Test2Component } from './test2/test2.component';
 
 const routes: Routes = [
   {path: '', component: ClientComponent,
@@ -30,6 +32,8 @@ const routes: Routes = [
     {path: 'bet-history', component: BetHistoryComponent},
     {path: 'live-bet-history', component: LiveBetHistoryComponent},
     {path: 'inplay-live/:id', component: InplayLiveComponent},
+    {path: 'test', component: TestComponent},
+    {path: 'test2', component: Test2Component},
 
   ]}, 
 ];
