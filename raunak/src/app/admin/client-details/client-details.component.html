@@ -33,15 +33,15 @@
       </td>
         <td><h6>{{data.user_name}}</h6>
           <button class="bg-danger text-light" [routerLink]="['/admin/edit-user',data.user_id]">Edit</button>
-          <button class="bg-success text-light"data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" (click)="sendinguser(data)">Change Pass</button></td>
+          <button class="bg-success text-light"data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" (click)="sendinguser(data,'Change Pass')">Change Pass</button></td>
           <td><h5>{{data.account_balance}}</h5>
             <button class="bg-danger text-light">Statement</button>
         </td>
         <td><h5>Deposit</h5>
-          <button class="bg-warning" data-bs-toggle="modal" data-bs-target="#exampleModal2" data-bs-whatever="@mdo2" (click)="sendinguser(data)">Deposit</button>
+          <button class="bg-warning" data-bs-toggle="modal" data-bs-target="#exampleModal2" data-bs-whatever="@mdo2" (click)="sendinguser(data ,'Deposit')">Deposit</button>
       </td>
       <td><h5>Withdraw</h5>
-          <button class="bg-success text-light"  data-bs-toggle="modal" data-bs-target="#exampleModal3" data-bs-whatever="@mdo3" (click)="sendinguser(data)">Withdraw</button>
+          <button class="bg-success text-light"  data-bs-toggle="modal" data-bs-target="#exampleModal3" data-bs-whatever="@mdo3" (click)="sendinguser(data,'Withdraw')">Withdraw</button>
       </td>
         <td>0.00</td>
         <td>{{data.commission_type}}</td>
@@ -110,7 +110,7 @@
         <h5 class="modal-title" id="exampleModalLabel2" style="color: white;" >Deposit Chip</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
       </div>
-      <div class="modal-body">
+      <!-- <div class="modal-body">
         <form [formGroup]="coinsForm">
           <div class="mb-3">
             <h5 class="depositUsername">To User- <span>{{coinUpdate.user_code}}</span></h5>
@@ -133,7 +133,33 @@
             <div class="text-danger fst-italic" *ngIf="parrentaccount < coinUpdate.new_coins">Chips can not be greater than parent coin</div>
           </div>
         </form>
+      </div> -->
+
+      <div class="modal-body">
+  <form [formGroup]="coinsForm">
+    <div class="mb-3">
+      <h5 class="depositUsername">To User- <span>{{coinUpdate.user_code}}</span></h5>
+      <section class="coins">
+        <div class="w-50 parent_coins">
+          <h6>Parent Coins:</h6>
+          <h6>{{coinUpdate.parent_account_balance | number: '1.2-2'}}</h6>
+        </div>
+        <div class="w-50 users_coins">
+          <h6>Users Coins:</h6>
+          <h6>{{coinUpdate.account_balance | number: '1.2-2'}}</h6>
+        </div>
+      </section>
+    </div>
+    <div class="mb-3">
+      <input type="number" #deposit class="form-control form-control-sm" placeholder="Enter Coins" id="recipient-name2" formControlName="new_coins" min="0" onkeyup="if(this.value<0){this.value= this.value * -1}">
+      <div *ngIf="coinsForm.get('new_coins').invalid && coinsForm.get('new_coins').touched">
+        <div class="text-danger fst-italic" *ngIf="coinsForm.get('new_coins').errors?.required">Required</div>
       </div>
+      <div class="text-danger fst-italic" *ngIf="parrentaccount < coinUpdate.new_coins">Chips cannot be greater than parent coin</div>
+    </div>
+  </form>
+</div>
+
       <div class="modal-footer">
         <button type="button" #closebtn2 class="btn btn-secondary" data-bs-dismiss="modal" (click)="close()">Close</button>
         <button type="button" class="btn btn-primary" (click)="addcoins()" [disabled]="coinsForm.invalid || coinsForm.hasError('new_coins') || disableSubmit">Deposit</button>
@@ -160,16 +186,16 @@
             <section class="coins">
             <div class="w-50 parent_coins">
               <h6>Parent Coins:</h6>
-              <h6>{{coinUpdate.parent_account_balance}}</h6>
+              <h6>{{coinUpdate.parent_account_balance | number: '1.2-2'}}</h6>
             </div>
             <div class="w-50 users_coins">
               <h6>Users Coins:</h6>
-              <h6> <h6>{{coinUpdate.account_balance}}</h6></h6>
+              <h6> <h6>{{coinUpdate.account_balance | number: '1.2-2'}}</h6></h6>
             </div>
           </section>
           </div>
           <div class="mb-3">
-            <input type="number"  #deposit class="form-control form-control-sm" placeholder="Enter Coins" id="recipient-name3" formControlName="new_coins" [(ngModel)]="coinUpdate.new_coins"  min="0" onkeyup="if(this.value<0){this.value= this.value * -1}"  (keyup)="dynamicCoins2($event)">
+            <input type="number"  #deposit class="form-control form-control-sm" placeholder="Enter Coins" id="recipient-name3" formControlName="new_coins" [(ngModel)]="coinUpdate.new_coins"  min="0" onkeyup="if(this.value<0){this.value= this.value * -1}" >
               <div *ngIf="coinsForm.get('new_coins').invalid &&  coinsForm.get('new_coins').touched">
               <div class="text-danger fst-italic" *ngIf="coinsForm.get('new_coins').errors?.required">Required</div>
             </div>
