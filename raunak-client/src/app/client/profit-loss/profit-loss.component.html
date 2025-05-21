@@ -1,1 +1,78 @@
-<p>profit-loss works!</p>
+<div class="container-fluid p-0">
+  <!-- Header Section -->
+  <div class="bg-dark text-white py-2 px-3 d-flex align-items-center justify-content-between flex-wrap">
+    <div class="d-flex align-items-center gap-2">
+      <h5 class="mb-0 fw-bold">PROFIT LOSS LISTING</h5>
+      <select class="form-select form-select-sm w-auto ms-2" [(ngModel)]="entriesPerPage">
+        <option *ngFor="let val of [10, 25, 50, 100]" [value]="val">{{ val }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="bg-white py-3 px-3 d-flex flex-wrap gap-3 align-items-end shadow-sm">
+    <div class="form-group">
+      <label>Event Type</label>
+      <select class="form-select" [(ngModel)]="selectedEventType">
+        <option value="all">All</option>
+        <!-- Add other options dynamically if needed -->
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>From Date</label>
+      <input type="date" class="form-control" [(ngModel)]="fromDate">
+    </div>
+
+    <div class="form-group">
+      <label>To Date</label>
+      <input type="date" class="form-control" [(ngModel)]="toDate">
+    </div>
+
+    <div class="form-group">
+      <label>&nbsp;</label><br />
+      <button class="btn btn-warning text-dark fw-bold" (click)="filter()">Filter</button>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="table-responsive px-3 mt-3">
+    <table class="table table-bordered table-striped text-center align-middle">
+      <thead class="table-secondary">
+        <tr>
+          <th>S.No.</th>
+          <th>Event Name</th>
+          <th>Market</th>
+          <th>P_L</th>
+          <th>Commission</th>
+          <th>Created On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of profitLossData; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.eventName }}</td>
+          <td>{{ item.market }}</td>
+          <td>{{ item.p_l | number:'1.2-2' }}</td>
+          <td>{{ item.commission | number:'1.2-2' }}</td>
+          <td>{{ item.createdOn }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Section -->
+  <div class="d-flex justify-content-between align-items-center px-3 pb-3">
+    <div>Showing {{ currentStartIndex + 1 }} to {{ currentEndIndex }} of {{ totalEntries }} Entries</div>
+    <nav>
+      <ul class="pagination pagination-sm mb-0">
+        <li class="page-item"><a class="page-link" href="#">First</a></li>
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item active"><span class="page-link">1</span></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <li class="page-item"><a class="page-link" href="#">Last</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+

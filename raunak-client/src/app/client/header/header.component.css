@@ -5,6 +5,7 @@
     border-radius: 20px;
     width: 400px;
     align-items: center;
+    font-size: 15px;
 }
 .alert-notification-icon{
     padding: 0px 5px 0px 5px;
@@ -16,18 +17,17 @@
 } */
 
 .alert-notification-marquee{
-    padding: 0px 5px 0px 5px;
+    padding: 10px;
 }
 
 .secondnav{
     position: fixed;
-    top: 60px;
+    top: var(--header-height);
     width: 100%;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
     border: 1px solid rgba(1, 41, 112, 0.3);
-
-    z-index: 1050;
+      z-index: 1000; /* ✅ Changed from 999 to 1000 */
 }
 
 .secondnav-ul{
@@ -87,7 +87,7 @@
         position: absolute !important;
         background-color: #f9f9f9;
         min-width: 160px;
-        z-index: 999;
+        z-index: 9999;
         text-align: left;
       }
       
@@ -116,6 +116,10 @@
         display: block;
       }
 
+      .nav-item li a{
+        cursor:pointer;
+      }
+
 
 
 @media only screen and (max-width: 800px) {
@@ -126,10 +130,6 @@
     .fixed-top{
         position: fixed;
         top: 20px;
-    }
-    .upper-alert{
-        background-color: white;
-
     }
     .alert-notification-marquee{
         font-size: 13px;
@@ -145,6 +145,8 @@
 
     #sidebar{
         display: flex;
+        z-index: 1080;
+        height: 100vh;
     }
 
     .toggle-sidebar-btn{
@@ -166,5 +168,21 @@
     width: 100%;
   }
 
+  .dropdown-menu {
+  z-index: 10000 !important;
+}
+
+.header,
+.header-nav {
+  overflow: visible !important;
+}
+
 }   
+
+ .upper-alert{
+  padding: 20px;
+    z-index: 9999; /* high value to bring it above other elements */
+    }
+
+    
   

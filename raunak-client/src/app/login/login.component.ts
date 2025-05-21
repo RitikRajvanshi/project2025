@@ -35,40 +35,16 @@ export class LoginComponent {
       console.log(respond)
       if (respond && respond.length !== 0) {
         var user_data = respond[0];
+        console.log(user_data, "userdata");
         // console.log(respond[0])
-        localStorage.setItem( "user_data",JSON.stringify(user_data.user_id));
+        localStorage.setItem( "user_data",JSON.stringify(user_data));
         // localStorage.setItem( "token",respond.token);
         localStorage.setItem('isLoggedIn', 'true')
-        this.router.navigateByUrl('client');
+        this.router.navigate(['client']);
       }
       else {
         alert("Invalid Username or Password");
       }
-
-      // if (respond && respond.length !== 0) {
-      //   var user_data = JSON.stringify(respond.data);
-      //   localStorage.setItem( "UserData",user_data);
-      //   localStorage.setItem( "token",respond.token);
-      //   localStorage.setItem('isLoggedIn', 'true')
-
-      //   alert("login successfull");
-      //   if (respond.data.user_type == 'A') {
-      //     console.log(localStorage.getItem('isLoggedIn'));
-      //     this.router.navigateByUrl('admin');
-      //   }
-      //   else if (respond.data.user_type == 'T') {
-      //     // localStorage.setItem('isLoggedIn', 'true')
-      //     this.router.navigateByUrl('teacher');
-      //   }
-      //   else if (respond.data.user_type == 'S') {
-      //     // localStorage.setItem('isLoggedIn', 'true')
-      //     this.router.navigateByUrl('student');
-      //   }
-
-      // }
-      // else {
-      //   alert("Invalid Username or Password")
-      // };
     })
   }
 

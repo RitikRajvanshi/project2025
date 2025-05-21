@@ -1,0 +1,18 @@
+.table thead th {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .form-group {
+    flex: 1 1 100%;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+}

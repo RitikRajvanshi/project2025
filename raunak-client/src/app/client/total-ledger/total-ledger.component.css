@@ -1,0 +1,9 @@
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.9rem;
+  }
+
+  .d-flex.flex-wrap > * {
+    flex: 1 1 100%;
+  }
+}

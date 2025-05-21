@@ -1,69 +1,117 @@
-<div class="container m-auto mt-4 inplaymaindiv">
-    <div class="inplayheading">
-    <!-- <img src="../../../assets/images/cricket.png" alt="" class="cricketball"> -->
-    <img src="/#/assets/images/cricket.png" alt="" class="cricketball">
-    <h3 class="">Cricket</h3>
-    </div>
-    <div class="matchfixture"  *ngFor="let items of matchesdata">
-        <div class="matchnamemain" >
-            <ul class="matchname">
-                <li><img src="/#/assets/images/soccer-jersey.png" alt=""></li>
 
-                <li><a [routerLink]="['/client/inplay-live',items?.matchInfo.matchId]" (click)="sendingMatchdata(items)">{{items.matchInfo.series}}</a></li>
-
-            </ul>
-            <ul class="matchdate">
-                <li><img src="/#/assets/images/clock.png" alt=""></li>
-                <li>{{items.event_date_start}}</li>
-                <li><img src="/#/assets/images/star.png" alt=""></li>
-            </ul>
+<div class="container-fluid my-4">
+  <div class="row">
+    <div class="col-lg-6 col-md-12 col-12 col-sm-12 mb-4">
+        <div class="nav  nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <button class="nav-link active" id="v-pills-cricket-tab" data-bs-toggle="pill" data-bs-target="#v-pills-cricket" type="button" role="tab"><i class="fas fa-cricket me-2"></i> Cricket</button>
+            <button class="nav-link" id="v-pills-soccer-tab" data-bs-toggle="pill" data-bs-target="#v-pills-soccer" type="button" role="tab"><i class="fas fa-futbol me-2"></i> Soccer</button>
+            <button class="nav-link" id="v-pills-tennis-tab" data-bs-toggle="pill" data-bs-target="#v-pills-tennis" type="button" role="tab"><i class="fas fa-table-tennis me-2"></i> Tennis</button>
+            <button class="nav-link" id="v-pills-basketball-tab" data-bs-toggle="pill" data-bs-target="#v-pills-basketball" type="button" role="tab"><i class="fas fa-basketball me-2"></i> Basketball</button>
+          </div>
+      <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-cricket" role="tabpanel">
+          <h5>🏏 Cricket Matches</h5>
+          <div class="match-card">
+            <div class="match-info">
+              <i class="fas fa-shirt"></i>
+              <div class="match-text" *ngFor="let items of matchesdata">
+                <strong><a [routerLink]="['/client/inplay-live',items?.matchInfo.matchId]" (click)="sendingMatchdata(items)">{{items.matchInfo.series}}</a></strong>
+                <span class="match-time">{{items.matchInfo.date | date:'dd MMM'}}, {{items.matchInfo.time}}</span>
+              </div>
+            </div>
+            <div><i class="fas fa-tv"></i></div>
+          </div>
         </div>
-        <img src="/#/assets/images/television.png" alt="" class="television">
 
-    </div>
-    <!-- <div class="matchfixture">
-        <div class="matchnamemain">
-            <ul class="matchname">
-                <li><img src="../../../assets/images/soccer-jersey.png" alt=""></li>
-                <li>Chennai Super Kings vs Mumbai Indian</li>
-            </ul>
-            <ul class="matchdate">
-                <li><img src="../../../assets/images/clock.png" alt=""></li>
-                <li>12/04/2024</li>
-                <li><img src="../../../assets/images/star.png" alt=""></li>
-            </ul>
+        <div class="tab-pane fade" id="v-pills-soccer" role="tabpanel">
+          <h5>⚽ Soccer Matches</h5>
+          <div class="match-card">
+            <div class="match-info">
+              <i class="fas fa-shirt"></i>
+              <div class="match-text">
+                <strong>Real Madrid vs Barcelona</strong>
+                <span class="match-time">06 May, 21:00</span>
+              </div>
+            </div>
+            <div><i class="fas fa-tv"></i></div>
+          </div>
         </div>
-        <img src="../../../assets/images/television.png" alt="" class="television">
 
-    </div>
-    <div class="matchfixture">
-        <div class="matchnamemain">
-            <ul class="matchname">
-                <li><img src="../../../assets/images/soccer-jersey.png" alt=""></li>
-                <li>Indian Premier League</li>
-            </ul>
-            <ul class="matchdate">
-                <li><img src="../../../assets/images/clock.png" alt=""></li>
-                <li>12/04/2024</li>
-                <li><img src="../../../assets/images/star.png" alt=""></li>
-            </ul>
+        <div class="tab-pane fade" id="v-pills-tennis" role="tabpanel">
+          <h5>🎾 Tennis Matches</h5>
+          <div class="match-card">
+            <div class="match-info">
+              <i class="fas fa-shirt"></i>
+              <div class="match-text">
+                <strong>Nadal vs Djokovic</strong>
+                <span class="match-time">06 May, 17:00</span>
+              </div>
+            </div>
+            <div><i class="fas fa-tv"></i></div>
+          </div>
         </div>
-        <img src="../../../assets/images/television.png" alt="" class="television">
 
-    </div>
-    <div class="matchfixture">
-        <div class="matchnamemain">
-            <ul class="matchname">
-                <li><img src="../../../assets/images/soccer-jersey.png" alt=""></li>
-                <li>Kolkata Night Riders Vs Lucknow Super Gaints</li>
-            </ul>
-            <ul class="matchdate">
-                <li><img src="../../../assets/images/clock.png" alt=""></li>
-                <li>12/04/2024</li>
-                <li><img src="../../../assets/images/star.png" alt=""></li>
-            </ul>
+        <div class="tab-pane fade" id="v-pills-basketball" role="tabpanel">
+          <h5>🏀 Basketball Matches</h5>
+          <div class="match-card">
+            <div class="match-info">
+              <i class="fas fa-shirt"></i>
+              <div class="match-text">
+                <strong>Lakers vs Warriors</strong>
+                <span class="match-time">06 May, 20:00</span>
+              </div>
+            </div>
+            <div><i class="fas fa-tv"></i></div>
+          </div>
         </div>
-        <img src="../../../assets/images/television.png" alt="" class="television">
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-12 col-sm-12">
+      <!-- <h4 class="mb-3">🗓️ Match Center</h4> -->
+      <div class="accordion" id="rightAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="matchListHeading">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#matchList" aria-expanded="true" aria-controls="matchList">
+              <i class="fas fa-calendar-alt me-2"></i> Mini Games
+            </button>
+          </h2>
+          <div id="matchList" class="accordion-collapse collapse show" aria-labelledby="matchListHeading">
+            <div class="accordion-body">
 
-    </div> -->
-</div>
+      
+              <div class="match-card">
+                <div class="match-info">
+                  <i class="fas fa-shirt"></i>
+                  <div class="match-text ">
+                    <!-- <strong>Mumbai Indians v Gujarat Titans</strong>
+                    <span class="match-time">06 May 19:30</span> -->
+                    <strong class="text-danger"> No data found...</strong>
+                  </div>
+                </div>
+                <div class="tv-icon">
+                  <i class="fas fa-tv"></i>
+                </div>
+              </div>
+
+          
+              <!-- <div class="match-card">
+                <div class="match-info">
+                  <i class="fas fa-shirt"></i>
+                  <div class="match-text">
+                    <strong>Netherlands v United Arab Emirates</strong>
+                    <span class="match-time">06 May 14:30</span>
+                  </div>
+                </div>
+                <div class="tv-icon">
+                  <i class="fas fa-tv"></i>
+                </div>
+              </div> -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end right column -->
+
+  </div> <!-- end row -->
+</div> <!-- end container -->

@@ -1,1 +1,98 @@
-<p>total-ledger works!</p>
+<div class="container-fluid p-0">
+  <!-- Header Section -->
+  <div class="bg-dark text-white py-2 px-3 d-flex align-items-center justify-content-between">
+    <h5 class="mb-0 fw-bold">COMPANY LENA DENA</h5>
+    <button class="btn btn-warning btn-sm" (click)="goBack()">Back</button>
+  </div>
+
+  <!-- Filter Section -->
+  <div class="bg-white px-3 pt-3 pb-1 shadow-sm">
+    <div class="d-flex flex-wrap gap-3 align-items-end">
+      <div class="form-group">
+        <label>From Date</label>
+        <input type="date" class="form-control" [(ngModel)]="fromDate">
+      </div>
+
+      <div class="form-group">
+        <label>To Date</label>
+        <input type="date" class="form-control" [(ngModel)]="toDate">
+      </div>
+
+      <div class="form-group">
+        <label>Type</label>
+        <select class="form-select" [(ngModel)]="selectedType">
+          <option value="All">All</option>
+          <option value="Lena">Lena</option>
+          <option value="Dena">Dena</option>
+        </select>
+      </div>
+
+      <button class="btn btn-success mt-3" (click)="search()">Search</button>
+    </div>
+  </div>
+
+  <!-- Summary Section -->
+  <div class="d-flex justify-content-between align-items-center bg-light p-2 mt-2 mb-3 rounded text-center">
+    <div class="flex-fill border-end">
+      <label class="fw-bold d-block">Lena:</label>
+      <span class="text-success fw-bold">{{ lena | number:'1.2-2' }}</span>
+    </div>
+    <div class="flex-fill border-end">
+      <label class="fw-bold d-block">Dena:</label>
+      <span class="text-danger fw-bold">{{ dena | number:'1.2-2' }}</span>
+    </div>
+    <div class="flex-fill">
+      <label class="fw-bold d-block">Balance:</label>
+      <span [ngClass]="balance >= 0 ? 'text-success' : 'text-danger'" class="fw-bold">
+        {{ balance >= 0 ? (balance + ' Lena Hai') : (balance + ' Dena Hai') }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped text-center align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Date</th>
+          <th>Collection Name</th>
+          <th>Debit</th>
+          <th>Credit</th>
+          <th>Balance</th>
+          <th>Payment Type</th>
+          <th>Remark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of ledgerData">
+          <td>{{ item.date }}</td>
+          <td class="text-start text-primary">{{ item.collection }}</td>
+          <td class="text-danger">{{ item.debit | number:'1.2-2' }}</td>
+          <td class="text-success">{{ item.credit | number:'1.2-2' }}</td>
+          <td [ngClass]="item.balance >= 0 ? 'text-success' : 'text-danger'">{{ item.balance | number:'1.2-2' }}</td>
+          <td>{{ item.paymentType || '-' }}</td>
+          <td>{{ item.remark }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-center mt-2">
+    <ul class="pagination mb-0">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="goToFirst()">«</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="prevPage()">‹</a>
+      </li>
+      <li class="page-item active"><span class="page-link">{{ currentPage }}</span></li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="nextPage()">›</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="goToLast()">»</a>
+      </li>
+    </ul>
+  </div>
+</div>

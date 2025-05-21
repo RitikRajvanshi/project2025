@@ -12,6 +12,7 @@ export class InPlayComponent {
 
   date:any = moment().format('YYYY-MM-DD');
   matchesdata:any[]=[];
+  time:any;
   
   ngOnInit(){
     // this.todaysMatch();
@@ -28,13 +29,16 @@ export class InPlayComponent {
         const url =`http://localhost:3000/client/all-matches`;     
         const results:any = await this.http.get(url).toPromise();
         this.matchesdata = results;
-        console.log(results, "results");
+        this.time = results?.matchInfo?.time;
+        console.log(results, "results");  
       
     }
     catch(err){
       console.error(err);
     }
   }
+
+  
 
   // listenToLiveScore() {
   //   this.socketService.listen('scoreUpdate').subscribe((scoreData: any) => {

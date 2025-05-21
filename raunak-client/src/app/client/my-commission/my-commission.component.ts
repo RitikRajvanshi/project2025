@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./my-commission.component.css']
 })
 export class MyCommissionComponent {
+  startDate: string = '';
+  endDate: string = '';
+  commissionList: any[] = []; // Fill dynamically on search
 
+  searchCommission() {
+    // Fetch commission data based on date range
+    console.log(this.startDate, this.endDate);
+    // Dummy example: 
+    this.commissionList = []; // Clear or load actual data
+  }
 }

@@ -1,0 +1,76 @@
+  .header-bar {
+      background-color: #32475a;
+      color: white;
+      padding: 8px 15px;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .header-bar select {
+      width: auto;
+      padding: 2px 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .filters {
+      padding: 10px 15px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: white;
+      border-bottom: 1px solid #ddd;
+    }
+    .filters input[type="date"],
+    .filters input[type="text"],
+    .filters select {
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      padding: 6px 8px;
+      min-width: 140px;
+      font-size: 14px;
+    }
+    .filters button {
+      min-width: 90px;
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      font-weight: 600;
+      border-radius: 3px;
+    }
+    table thead tr {
+      background-color: #d6d6d6;
+      color: #333;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    table thead th,
+    table tbody td {
+      vertical-align: middle !important;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .pagination-info {
+      padding: 6px 15px;
+      font-size: 13px;
+      color: #555;
+    }
+    .pagination-list {
+      padding-left: 15px;
+    }
+    .pagination-list .page-item.active .page-link {
+      background-color: #bf8100;
+      border-color: #bf8100;
+      color: white;
+    }
+    .pagination-list .page-link {
+      font-size: 13px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    /* Scroll horizontally on small devices */
+    .table-responsive {
+      overflow-x: auto;
+    }

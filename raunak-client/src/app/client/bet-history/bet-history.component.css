@@ -1,0 +1,49 @@
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 12px;
+  }
+
+  .d-flex.text-center {
+    flex-direction: column;
+
+    button {
+      margin-bottom: 4px;
+    }
+  }
+
+  .btn-warning {
+    font-size: 14px;
+  }
+
+  .px-3 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .flex-wrap {
+    flex-direction: column;
+    align-items: flex-start !important;
+
+    .btn-group {
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .row.bg-light {
+    padding: 0.5rem 0.75rem !important;
+
+    .form-control-sm,
+    .form-select-sm {
+      font-size: 0.85rem;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.85rem;
+    }
+  }
+}
+

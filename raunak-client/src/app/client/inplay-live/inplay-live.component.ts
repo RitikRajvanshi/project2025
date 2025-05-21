@@ -2,9 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription, interval } from 'rxjs';
+import { Subscription, firstValueFrom, interval } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { io, Socket } from 'socket.io-client';
+import { LoaderService } from 'src/app/services/loader.service';
+import { environment } from 'src/environments/environment.production';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-inplay-live',
@@ -22,7 +25,7 @@ export class InplayLiveComponent {
   openPanel: boolean = false;
   openDialogBox: boolean = false;
   intervalId: any;
-  timer: number = 8000;
+  timer: number = 15000;
   countdown: number = this.timer / 1000;
   savecountdown: number = 0;
   bgcolor: string = '';
@@ -34,29 +37,81 @@ export class InplayLiveComponent {
   currentBallIndex = 0;
   recentballsLive: any[] = [];
   lastRecentBalls: any[] = [];
-    odds  =
-      {
-        lagai:0,
-        khai:0,
-        isFavourite:false
-      }
+  odds =
+    {
+      lagai: 0,
+      khai: 0,
+      isFavourite: false
+    }
     ;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  oddsValue = {
+    odd: 0,
+    stake: 0,
+    oddContext: ''
+  }
 
-  ngOnInit() {
+  profit_loss = {
+    bet:0,
+    profit: 0,
+    loss: 0
+  }
+
+  estimatedProfit = {
+    profit: 0.00,
+    loss: 0.00
+  }
+
+  userData: any;
+
+  placeBetObj = {
+    user_id: 0,
+    match_id: 0,
+    bet: 0,
+    loss: 0,
+    transaction_type: 'withdrawl',
+    bet_type: '',
+    team1: '',
+    team2: '',
+    betOnteam: '',
+    bet_mode:'',
+    prev_balance: 0.00,
+    current_balance: 0.00,
+    estimated_profit: 0.00,
+    estimated_loss: 0.00
+  }
+
+  matchFulldatainarray: any[] = [];
+
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, private loaderService: LoaderService, private userService: UserService) {
+
+    this.userService.userData$.subscribe((data) => {
+      this.userData = data;
+    })
+    console.log(this.userData, 'this.userData');
+    // const user_data: any = localStorage.getItem('user_data');
+    // this.userData = JSON.parse(user_data);
+    this.placeBetObj.user_id = this.userData.user_id;
+    this.placeBetObj.prev_balance = this.userData.account_balance;
+  }
+
+  ngAfterViewInit() {
     this.route.paramMap.subscribe((params) => {
       this.matchId = params.get('id');
+      this.placeBetObj.match_id = Number(this.matchId);
       console.log(this.matchId, "matchId");
       if (this.matchId) {
-        // this.startFetchingLiveData();
-        // this.getothersData();
-        this.connectSocket();
-        // this.startOverAnimation(this.recentballsLive);
-        // this.startOverAnimation();
+        if (!this.socket || !this.socket.connected) {
+          this.connectSocket();
+          this.getEstimatedProfitLossforcurrentMatch();
+        }
       }
+
+       
     });
   }
+
 
   ngOnDestroy() {
     if (this.subscription) {
@@ -64,22 +119,6 @@ export class InplayLiveComponent {
     }
   }
 
-  // startFetchingLiveData() {
-  //   this.subscription = interval(5000) // Fetch data every 5 seconds
-  //     .pipe(
-  //       switchMap(() => this.getMatchData())
-  //     )
-  //     .subscribe(
-  //       data => {
-  //         console.log(data);
-  //         this.liveData = data.result[0].comments.Live; // Assuming the data is an array of objects
-  //         console.log(this.liveData, "livedata");
-  //       },
-  //       error => {
-  //         console.error('Error fetching live data', error);
-  //       }
-  //     );
-  // }
 
   startFetchingLiveData() {
     this.subscription = interval(5000) // Fetch data every 5 seconds
@@ -99,17 +138,6 @@ export class InplayLiveComponent {
       );
   }
 
-  // async getMatchData(): Promise<any> {
-  //   const url = `http://localhost:3000/client/specific-match`;
-  //   if (this.matchId) {
-  //     const matchId = {
-  //       match_id: +this.matchId
-  //     };
-
-  //     return await this.http.post(url, matchId).toPromise();
-  //   }
-  //   return { result: [] };
-  // }
 
   async getMatchData(): Promise<any> {
     const url = `http://localhost:3000/client/all-matches`;
@@ -125,120 +153,148 @@ export class InplayLiveComponent {
     );
   }
 
-  // async getothersData() {
-  //   const url = `http://localhost:3000/client/specific-match`;
-  //   if (this.matchId) {
-  //     const matchId = {
-  //       match_id: +this.matchId
-  //     };
-
-  //     const results:any= await this.http.post(url, matchId).toPromise();
-  //     console.log(results.result, "results");
-  //     this.matchData = results?.result ;
-  //   }
-
-  // }
-
-  // async getothersData() {
-  //   const url =`http://localhost:3000/client/all-matches`;     
-  //   const results:any = await this.http.get(url).toPromise();
-
-  //   this.matchData = results.filter((specificData:any)=>
-  //   {
-  //     return specificData.matchInfo.matchId == this.matchId;
-  //   }
-  //   );
-  //   console.log(this.matchData, "results");
-  //   }
 
   connectSocket() {
-    this.socket = io('http://localhost:3000'); // Change to your backend URL
+    this.socket = io('http://localhost:3000', {
+      transports: ['websocket'],
+      reconnection: true,           // Enable auto-reconnect
+      reconnectionAttempts: Infinity, // Keep trying forever
+      reconnectionDelay: 2000,      // Wait 2 seconds between tries
+      timeout: 20000,               // Connection timeout
+    });
+
+    let loadStartTime: number;
 
     this.socket.on('connect', () => {
-      console.log('Connected to server via Socket.IO');
+      console.log('✅ Connected to server via Socket.IO');
+      loadStartTime = performance.now(); // Start time tracking
+      this.loaderService.show();
     });
-
-    // this.socket.on('liveScoreUpdate', (liveMatches: any[]) => {
-    //   const filtered = liveMatches.filter(match => match.matchInfo.matchId == this.matchId);
-    //   this.matchData = filtered.length ? filtered[0] : null;
-    //   console.log('Received live data:', this.matchData);
-    // });
 
     this.socket.on('liveScoreUpdate', (liveMatches: any[]) => {
-      if (Array.isArray(liveMatches) && liveMatches.length > 0) {
-        const filtered = liveMatches.filter(match => match.matchInfo.matchId == this.matchId);
+      const loadEndTime = performance.now(); // End time
+      const loadDuration = loadEndTime - loadStartTime;
+      console.log(`⏱️ Live data received in ${loadDuration.toFixed(2)} ms`);
 
+      this.loaderService.hide();
 
-        if (filtered.length > 0) {
-          this.matchData = filtered[0];
-
-          this.odds = filtered[0].liveScore?.odds;
-
-          console.log(this.matchData, "this.matchData", this.odds, "odds");
-          
-          const newMatch = filtered[0];
-
-          const newRecentBalls = newMatch.recentBalls;
-
-          this.matchData = newMatch;
-
-          const newBallCount = newRecentBalls.length;
-          const lastBallCount = this.lastRecentBalls.length;
-
-          // Only update if a new ball has been added
-          if (newBallCount > lastBallCount) {
-            const newBall = newRecentBalls[0]; // latest ball is at 0 because of unshift
-            const newBallIndex = newBallCount - 1; // position in currentBalls (0-based)
-
-            // Update the ball and set blink index
-            this.updateBall(newBallIndex, newBall);
-
-            // If 6 balls are completed, reset for the next over
-            if (newBallCount === 6) {
-              this.currentBalls = Array(this.maxBalls).fill(null);
-              this.currentBallIndex = -1;
-            }
-          }
-
-          this.recentballsLive = newRecentBalls;
-          this.lastRecentBalls = [...newRecentBalls]; // Save snapshot
-        } else {
-          console.warn('Match not found in update. Keeping old data.');
-          // Optional: keep previous data or set to null if you prefer
-          // this.matchData = null;
-        }
-      } else {
-        console.warn('Received empty or invalid live match data. Keeping old data.');
-        // Optional: keep previous data or set to null if you prefer
-        // this.matchData = null;
+      if (!Array.isArray(liveMatches) || liveMatches.length === 0) {
+        console.warn('⚠️ Received empty or invalid live match data.');
+        return;
       }
 
-      // console.log('Processed live data:', this.matchData);
+      const filtered = liveMatches.filter(match => match.matchInfo.matchId == this.matchId);
+
+      if (filtered.length === 0) {
+        console.warn('⚠️ Match not found in update. Keeping old data.');
+        return;
+      }
+
+      const newMatch = filtered[0];
+      this.matchFulldatainarray = filtered;
+      this.matchData = newMatch;
+      this.odds = newMatch.liveScore?.odds;
+      this.placeBetObj.team1 = newMatch?.matchInfo?.team1;
+      this.placeBetObj.team2 = newMatch?.matchInfo?.team2;
+
+
+
+      console.log('📺 Live match data received:', this.matchData);
+      console.log('🎯 Odds:', this.odds);
+
+      const newRecentBalls = newMatch.recentBalls || [];
+      const newBallCount = newRecentBalls.length;
+      const lastBallCount = this.lastRecentBalls.length;
+
+      if (newBallCount > lastBallCount) {
+        const newBall = newRecentBalls[0];
+        const newBallIndex = newBallCount - 1;
+
+        this.updateBall(newBallIndex, newBall);
+
+        if (newBallCount === 6) {
+          this.currentBalls = Array(this.maxBalls).fill(null);
+          this.currentBallIndex = -1;
+        }
+      }
+
+      this.recentballsLive = newRecentBalls;
+      this.lastRecentBalls = [...newRecentBalls];
     });
 
-    this.socket.on('disconnect', () => {
-      console.log('Socket disconnected');
+    this.socket.on('keepAlive', (data: any) => {
+      console.log('🟢 Keep-alive received:', data.timestamp);
+    });
+
+    // this.socket.on('disconnect', () => {
+    //   console.warn('🔌 Socket disconnected.');
+    // });
+
+    this.socket.on('matchCompleted', (data: any) => {
+      console.log(`🔴 Match completed for matchId: ${data.matchId}. Disconnecting socket.`);
+      this.socket?.disconnect();
+    });
+
+    this.socket.on('connect_error', (err: any) => {
+      console.error('❌ Socket connection error:', err);
+      this.loaderService.hide();
     });
   }
+
+
 
   updateBall(index: number, ball: any) {
     this.currentBalls[index] = ball.result.split(' run(s)')[0]; // e.g., '1 run', 'Wicket'
     this.currentBallIndex = index; // blink this ball
-  
+
     // Optional: Force Angular change detection
     this.currentBalls = [...this.currentBalls];
   }
 
+  getStake(value: number) {
+    this.oddsValue.stake = +value;
+    this.placeBetObj.bet_type = 'Fantasy';
+    this.profit_loss.bet = +value;
+
+    if (this.oddsValue.oddContext && this.oddsValue.oddContext == 'lagai') {
+      this.profit_loss.profit = this.oddsValue.odd * this.oddsValue.stake;
+      this.profit_loss.loss = this.oddsValue.stake;
+      this.placeBetObj.loss = this.profit_loss.loss;
+      this.placeBetObj.bet = this.profit_loss.loss;
+      this.placeBetObj.estimated_loss = this.profit_loss.loss;
+      this.placeBetObj.estimated_profit = this.profit_loss.profit;
+     
+    }
+    else {
+      this.profit_loss.profit = this.oddsValue.stake;
+      this.profit_loss.loss = this.oddsValue.odd * this.oddsValue.stake;
+      this.placeBetObj.loss = this.profit_loss.loss;
+      this.placeBetObj.bet = this.profit_loss.profit;
+      this.placeBetObj.estimated_loss = this.profit_loss.loss;
+      this.placeBetObj.estimated_profit = this.profit_loss.profit;
+
+    }
+    console.log(this.placeBetObj, "this.placeBetObj")
+  }
+
 
   //new code 
-  openBetPabel(value: any) {
-    if(value){
+  openBetPabel(value: any, context: string, team: string) {
+    console.log(value, "openBetPabel");
+    if (value) {
       console.log(value, "value");
+      // const lagai = value;
+
+      this.oddsValue.odd = value / 100;
+      this.oddsValue.oddContext = context;
+      this.placeBetObj.bet_mode =context;
+      this.placeBetObj.betOnteam = team;
+
       this.openPanel = true;
       this.savecountdown = this.countdown;
       // Clear any existing interval
       clearInterval(this.intervalId);
-  
+
       // Start countdown animation
       this.intervalId = setInterval(() => {
         if (this.savecountdown > 1) {
@@ -247,71 +303,44 @@ export class InplayLiveComponent {
         else if (this.savecountdown > 1) {
           this.bgcolor = 'red';
         }
-  
+
         else {
           clearInterval(this.intervalId);
         }
       }, 1000);
-  
+
       // Hide panel after timer
       setTimeout(() => {
+        this.oddsValue.odd = 0;
+        this.oddsValue.stake = 0;
+        this.oddsValue.oddContext = '';
+        this.profit_loss.profit = 0
+        this.profit_loss.loss = 0
+
         this.openPanel = false;
       }, this.timer);
     }
-    else{
+    else {
       console.log('No value found');
     }
 
 
   }
 
+  clearAll() {
+    this.oddsValue.odd = 0;
+    this.oddsValue.stake = 0;
+    this.oddsValue.oddContext = '';
+    this.profit_loss.profit = 0
+    this.profit_loss.loss = 0
+
+    this.openPanel = false;
+  }
+
   openEditStake() {
     this.openDialogBox = !this.openDialogBox;
   }
 
-  // startOverAnimation() {
-  //   this.currentBalls = Array(this.maxBalls).fill(null);
-  //   this.currentBallIndex = 0;
-
-  //   if (this.intervalId) {
-  //     clearInterval(this.intervalId); // avoid multiple intervals
-  //   }  
-
-  //   this.intervalId = setInterval(() => {
-  //     if (this.currentBallIndex < this.maxBalls) {
-  //       this.currentBalls[this.currentBallIndex] = this.currentBallIndex + 1;
-  //       this.currentBallIndex++;
-  //     } else {
-  //       this.currentBallIndex = 0; // restart
-  //       this.currentBalls = Array(this.maxBalls).fill(null); // reset balls
-  //     }
-  //   }, 5000); // change every 5 seconds
-  // }
-
-  // startOverAnimation(recentBallsFromBackend: any[]) {
-  //   // Prepare results in correct order (ball 1 to ball 6)
-  //   const latestOverBalls = [...recentBallsFromBackend]
-  //     .slice(0, 6)
-  //     .reverse()
-  //     .map(b => b.result === 'Wicket' ? 'W' : b.result.split(' ')[0]); // '1 run(s)' => '1'
-  //     console.log(latestOverBalls, "latestOverBalls");
-
-  //   this.currentBalls = Array(this.maxBalls).fill(null); // Reset display
-  //   this.currentBallIndex = 0;
-
-  //   if (this.intervalId) {
-  //     clearInterval(this.intervalId);
-  //   }
-
-  //   this.intervalId = setInterval(() => {
-  //     if (this.currentBallIndex < latestOverBalls.length) {
-  //       this.currentBalls[this.currentBallIndex] = latestOverBalls[this.currentBallIndex];
-  //       this.currentBallIndex++;
-  //     } else {
-  //       clearInterval(this.intervalId); // Stop after 6 balls
-  //     }
-  //   }, 2000); // Change every 2 seconds
-  // }
 
   startOverAnimation(recentBalls: any[]) {
     this.maxBalls = 6; // Maximum balls per over
@@ -345,7 +374,84 @@ export class InplayLiveComponent {
 
       // Update the animation
       this.currentBalls = [...this.currentBalls]; // Trigger Angular change detection
-    }, 10000); // Blinking every 5 seconds
+    }, 20000); // Blinking every 5 seconds
+  }
+
+
+
+  async placeBet() {
+
+    if (this.userData.account_balance < this.profit_loss.loss) {
+      // alert('You don not have enough money');
+      Swal.fire({
+        title: "Insufficient coins!",
+        icon: "warning"
+      });
+
+    }
+    else if (this.profit_loss.bet < 100) {
+      Swal.fire({
+        title: "Minimum 100 coins are required.",
+        icon: "warning"
+      });
+    }
+    else {
+      const url = environment.CLIENT_URL + environment.CLIENT.PLACE_BET;
+
+      const result: any = await firstValueFrom(this.http.post(url, this.placeBetObj));
+      if (result && result?.message) {
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `${result?.message}!`,
+          showConfirmButton: false,
+          timer: 1000
+        });
+
+        const usersData: any = await firstValueFrom(this.userService.getUsersData());
+        console.log(usersData, "usersData");
+
+        // 👇 Filter for current user only
+        if (usersData && usersData.length > 0) {
+          const updatedUser = usersData.find((u: any) => u.user_id == this.userData.user_id);
+          console.log(updatedUser, "updatedUser");
+
+          // ✅ Update global userData
+          if (updatedUser) {
+            //update in whole application
+            this.userService.updateUserData(updatedUser);
+          }
+        }
+
+        await this.getEstimatedProfitLossforcurrentMatch();
+  
+      }
+
+
+
+    }
+
+  }
+
+  async getEstimatedProfitLossforcurrentMatch(){
+        const betData: any = await firstValueFrom(this.userService.getAccountStatement());
+        const filteredData = betData
+          .filter((item: any) => item.user_id == this.userData.user_id && item.match_id == this.placeBetObj.match_id);
+
+        // Calculate totals
+        let totalEstimatedProfit = 0;
+        let totalEstimatedLoss = 0;
+        console.log(filteredData)
+
+        filteredData.forEach((item: any) => {
+          totalEstimatedProfit += parseFloat(item.estimated_profit || 0);
+          totalEstimatedLoss += parseFloat(item.estimated_loss || 0);
+        });
+
+        console.log('Total Estimated Profit:', totalEstimatedProfit);
+        console.log('Total Estimated Loss:', totalEstimatedLoss);
+        this.estimatedProfit.profit = totalEstimatedProfit;
+        this.estimatedProfit.loss = totalEstimatedLoss;
   }
 
 }

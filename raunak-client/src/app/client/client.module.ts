@@ -18,9 +18,8 @@ import { EditStakeComponent } from './edit-stake/edit-stake.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { InplayLiveComponent } from './inplay-live/inplay-live.component';
-import { TestComponent } from './test/test.component';
-import { Test2Component } from './test2/test2.component';
-
+import { LoaderComponent } from './loader/loader.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -39,14 +38,13 @@ import { Test2Component } from './test2/test2.component';
     LiveBetHistoryComponent,
     EditStakeComponent,
     InplayLiveComponent,
-    TestComponent,
-    Test2Component,
+    LoaderComponent,
   ],
   exports:[HeaderComponent],
 
   imports: [
     CommonModule,
-    ClientRoutingModule,FormsModule, ReactiveFormsModule,HttpClientModule
+    ClientRoutingModule,FormsModule, ReactiveFormsModule,HttpClientModule,NgxPaginationModule
   ]
 })
 export class ClientModule { }

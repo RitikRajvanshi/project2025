@@ -1,0 +1,12 @@
+.card {
+  border-radius: 0;
+  border: 1px solid #ccc;
+
+  .card-header {
+    font-size: 14px;
+  }
+
+  .card-body {
+    font-size: 14px;
+  }
+}

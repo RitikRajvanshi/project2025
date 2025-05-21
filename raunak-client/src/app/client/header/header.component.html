@@ -6,56 +6,69 @@
   <div class="d-flex align-items-center justify-content-between">
     <i class="bi bi-list toggle-sidebar-btn" style="color: #ffffff;" (click)="toggleSidebar()"></i>
 
+   
+
     <a href="index.html" class="logo d-flex align-items-center">
       <img src="../../assets/images/98BETHUB.png" alt="" height="100px">
-      <span class="d-none d-lg-block" style="color: #ffffff;">98bethub</span>
+      <span class="d-none d-lg-block" style="color: #ffffff;">Raunak</span>
     </a>
     <div class="alert-notification">
       <div></div>
       <i class="bi bi-bell-fill alert-notification-icon "></i>
-      <marquee class="text-danger alert-notification-marquee" behavior="" direction="">Welcome to 98Bethub.</marquee>
+      <marquee class="text-danger alert-notification-marquee" behavior="" direction="">Welcome to Raunak.</marquee>
     </div>
   </div>
+
+  
   <nav class="header-nav ms-auto">
+  <!-- Coin & Exposure Display with Single Large Rupee Icon -->
+
+
     <ul class="d-flex align-items-center">
-      <li class="nav-item dropdown pe-3">
+       <li class="nav-item dropdown pe-3">
+<div class="d-flex align-items-center me-4">
+  <div class="d-flex align-items-center">
+    <!-- Rupee Icon Circle -->
+    <div class="d-flex justify-content-center align-items-center border rounded-circle me-4"
+         style="width: 32px; height: 32px; background-color: white;">
+      <i class="bi bi-currency-rupee" style="font-size: 18px; color: #3a4b57;"></i>
+    </div>
+
+    <!-- Main and Exposure Info -->
+    <div class="d-flex flex-column" style="line-height: 1.2;">
+      <span class="text-white">Main: <span style="color: #ffffff;">{{userData?.account_balance ? userData?.account_balance : 0.00}}</span></span>
+      <span class="text-white">Exposure: <span style="color: red;">0.00</span></span>
+    </div>
+  </div>
+</div>
+
+
+       </li>
+      <li class="nav-item dropdown pe-3 ">
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
           <img src="assets/images/avatar.png" alt="Profile" class="rounded-circle">
+          
+
           <span class="d-none d-md-block dropdown-toggle ps-2" style="color: #ffffff;"></span>
         </a>
+          <p style="color:#a90a07;"><strong>{{userData?.user_code}}</strong></p>
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li class="dropdown-header">
-            <h6>Hi </h6>
-            <!-- <span>Web Designer</span> -->
+            <h6>Hi {{userData?.user_name}}</h6>
           </li>
           <li>
             <hr class="dropdown-divider">
           </li>
-          <!-- <li>
-                <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                  <i class="bi bi-person"></i>
-                  <span>My Profile</span>
-                </a>
-              </li> -->
-          <!-- <li>
-                <hr class="dropdown-divider">
-              </li> -->
-          <!-- <li>
-                <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                  <i class="bi bi-gear"></i>
-                  <span>Account Settings</span>
-                </a>
-              </li> -->
-          <!-- <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li>
-                <hr class="dropdown-divider">
-              </li> -->
           <li>
-            <a class="dropdown-item d-flex align-items-center">
-              <i class="bi bi-box-arrow-right"></i>
-              <span>Sign Out</span>
+            
+            <a class="dropdown-item d-flex align-items-center" (click)="this.router.navigateByUrl('')">
+              <span >Change Password</span>
+            </a>
+          </li>
+          <li>
+            
+            <a class="dropdown-item d-flex align-items-center" (click)="signOut()">
+              <span >Sign Out</span>
             </a>
           </li>
         </ul>
@@ -65,19 +78,16 @@
 </header>
 <div class="secondnav">
   <ul class="secondnav-ul">
-    <!-- <li class="secondnav-li"><a href=""><i class="bi bi-house-fill"></i> Dashboard</a></li> -->
     <li class="secondnav-li"><a [routerLink]="['inplay']"><i class="bi bi-play-fill"></i> In-Play</a></li>
     <li class="secondnav-li"><a [routerLink]="['all-market-book']"><i class="bi bi-bar-chart-line-fill"></i> All Market
         Book</a></li>
     <li class="secondnav-li"><a [routerLink]="['profile']"><i class="bi bi-person-circle"></i> Profile</a></li>
     <li class="secondnav-li"><a [routerLink]="['password']"><i class="bi bi-lock-fill"></i> Password</a></li>
+
     <li class="secondnav-li"><a data-bs-toggle="modal" data-bs-target="#exampleModal"><i
           class="bi bi-info-circle-fill"></i> Rules</a></li>
+
     <li class="secondnav-li"><a [routerLink]="['my-commission']"><i class="bi bi-journal-text"></i> My Commission</a>
-    </li>
-    <li class="secondnav-li"><a [routerLink]="['test']"><i class="bi bi-journal-text"></i> Test</a>
-    </li>
-    <li class="secondnav-li"><a [routerLink]="['test2']"><i class="bi bi-journal-text"></i> Test2</a>
     </li>
     <li class="secondnav-li dropdown"><a><i class="bi bi-journal-text"></i> Report</a>
       <div class="dropdown-content">
@@ -273,11 +283,11 @@
     <div class="modal-content">
       <div class="modal-header bg-dark text-warning"
         style="background-color: white; border-bottom: 1px solid grey; overflow-y: auto;">
-        <h5 class="modal-title" id="exampleModalLabel">98bethub.com Rules</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Raunak.com Rules</h5>
       </div>
 
 
-      <div class="modal-body pt-0">
+      <div class="modal-body pt-0 mt-2">
         <!-- <div class="modal-body"> -->
           <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-rounded btn-success me-2" (click)="chooseHindi()" >Hindi</button>

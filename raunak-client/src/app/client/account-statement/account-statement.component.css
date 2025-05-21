@@ -1,4 +1,4 @@
-
+/* 
 .report-container {
     background: white;
     padding: 20px;
@@ -47,4 +47,25 @@
     .w-sm-33 {
       width: 33.3333% !important;
     }
+  } */
+
+  .select-border {
+  color: #000;
+  font-size: 15px;
+  box-shadow: 2px 4px 10px 0 rgba(124, 8, 8, 0.05),
+    2px 4px 10px 0 rgba(0, 34, 51, 0.05);
+}
+
+
+  .table td,
+.table th {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.9rem;
   }
+}
+
