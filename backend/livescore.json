@@ -40,14 +40,14 @@
     "liveScore": {
       "battingTeam": {
         "name": "Mumbai Indians",
-        "runs": 158,
-        "wickets": 4,
+        "runs": 201,
+        "wickets": 3,
         "overs": "10.0",
         "batsmen": [
           {
-            "name": "Tim David",
-            "runs": 0,
-            "balls": 0,
+            "name": "Piyush Chawla",
+            "runs": 92,
+            "balls": 29,
             "fours": 0,
             "sixes": 0,
             "onStrike": true,
@@ -81,16 +81,22 @@
         ]
       },
       "odds": {
-        "lagai": 44,
-        "khai": 56,
-        "isFavourite": false
+        "Mumbai Indians": {
+          "lagai": 0,
+          "khai": 0,
+          "isFavourite": false
+        },
+        "Chennai Super Kings": {
+          "lagai": 16,
+          "khai": 19,
+          "isFavourite": true
+        }
       }
     },
     "availableBatsmen": [
-      "Piyush Chawla",
       "Jasprit Bumrah",
       "Gerald Coetzee",
-      "Shreyas Gopal"
+      "Akash Madhwal"
     ],
     "recentBalls": [],
     "currentInning": 1,
