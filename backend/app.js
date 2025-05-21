@@ -55,84 +55,7 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-// Function to update live match scores
-// function updateLiveScores() {
-//   let matches = JSON.parse(fs.readFileSync(filePath, "utf8"));
 
-//   matches.forEach((match) => {
-//     if (match.matchInfo.status === "Live") {
-//       let batting = match.liveScore.battingTeam;
-//       let bowling = match.liveScore.bowlingTeam;
-
-//       // **Ensure there are batsmen playing**
-//       let activeBatsmen = batting.batsmen.filter((b) => !b.out);
-//       if (activeBatsmen.length < 2) {
-//         console.log(`Match Ended: ${batting.name} all out!`);
-//         match.matchInfo.status = "Completed";
-//         return;
-//       }
-
-//       let striker = activeBatsmen.find((b) => b.onStrike) || activeBatsmen[0];
-//       let nonStriker = activeBatsmen.find((b) => !b.onStrike) || activeBatsmen[1];
-
-//       // **Get a bowler**
-//       let bowler = bowling.bowlers[0];
-
-//       if (!striker || !nonStriker || !bowler) {
-//         console.error("Missing player data. Skipping update.");
-//         return;
-//       }
-
-//       // **Stop match if 10 wickets fall**
-//       if (batting.wickets >= 10) {
-//         match.matchInfo.status = "Completed";
-//         console.log(`Match completed: ${match.matchInfo.series}`);
-//         return;
-//       }
-
-//       // **Simulate a single ball**
-//       let runsScored = Math.floor(Math.random() * 7); // Random runs (0-6)
-//       let isWicket = Math.random() < 0.08; // 8% chance of getting out
-
-//       if (isWicket) {
-//         batting.wickets += 1;
-//         striker.out = true;
-//         striker.dismissal = `b. ${bowler.name}`;
-//         console.log(`${striker.name} is OUT! (${striker.runs} runs)`);
-
-//         // **New batsman comes in if possible**
-//         let newBatsman = batting.batsmen.find((b) => !b.out && !b.notOut && !b.onStrike);
-//         if (newBatsman) {
-//           newBatsman.onStrike = true;
-//         }
-//       } else {
-//         striker.runs += runsScored;
-//         striker.balls += 1;
-//         batting.runs += runsScored;
-//       }
-
-//       // **Update balls & overs correctly**
-//       let totalBalls = Math.floor(batting.overs * 10) + 1;
-//       batting.overs = parseFloat((totalBalls / 6).toFixed(1));
-
-//       // **Swap strike every over**
-//       if (totalBalls % 6 === 0) {
-//         [striker.onStrike, nonStriker.onStrike] = [nonStriker.onStrike, striker.onStrike];
-//       }
-
-//       // **Update recent balls**
-//       match.recentBalls.push({
-//         over: batting.overs,
-//         bowler: bowler.name,
-//         batsman: striker.name,
-//         result: isWicket ? "Wicket" : `${runsScored} run(s)`,
-//       });
-
-//       console.log(
-//         `Updated Score: ${batting.name} - ${batting.runs}/${batting.wickets} (${batting.overs} overs)`
-//       );
-//     }
-//   });
 
 const defaultPlayers = [
   "Player 1", "Player 2", "Player 3", "Player 4", "Player 5",
@@ -188,109 +111,6 @@ function handleWicket(batting, match) {
   }
 }
 
-// setInterval(() => {
-//   let matches;
-//   try {
-//     matches = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-//   } catch (err) {
-//     console.error('Read error:', err);
-//     return;
-//   }
-
-//   matches.forEach(match => {
-//     if (match.matchInfo.status !== 'Live') return;
-
-//     const batting = match.liveScore?.battingTeam;
-//     if (!batting) return;
-
-//       // **Set current inning if not defined**
-//       if (match.currentInning === undefined) match.currentInning = 1;
-
-//     // Ensure availableBatsmen
-//     if (!match.availableBatsmen || match.availableBatsmen.length === 0) {
-//       const used = batting.batsmen.map(b => b.name);
-//       const full = match.matchInfo.squad1;
-//       match.availableBatsmen = full.filter(p => !used.includes(p));
-//       console.log(`Initialized availableBatsmen for match ${match.matchInfo.matchId}:`, match.availableBatsmen); // Add logging
-//     }
-
-//       // Ensure totalBalls and recentBalls
-//       if (!batting.totalBalls) batting.totalBalls = 0;
-//       match.recentBalls = match.recentBalls || [];
-
-//     // Simulate ball
-//     const isWicket = Math.random() < 0.1;
-
-//   const totalOversAllowed = +match.matchInfo.overs;
-//   const currentOvers = parseFloat(batting.overs);
-
-//   console.log(totalOversAllowed, "totalOversAllowed" )
-//   console.log(currentOvers, "currentOvers" )
-
-//      // Check if innings should be completed based on 10 wickets or 20 overs
-//      if (batting.wickets >= 10) {
-//       match.matchInfo.status = "Completed"; // End match if 10 wickets are down
-//     } else if (currentOvers >= totalOversAllowed) {
-//       // If overs reach 20 (120 balls), end the innings
-//       match.inningCompleted = true; 
-//       console.log("Innings completed: Maximum overs reached.");
-//     }
-
-//     if (isWicket) {
-//       handleWicket(batting, match);
-//       match.recentBalls.unshift({
-//         over: batting.overs,
-//         batsman: batting.batsmen[0]?.name || 'N/A',
-//         result: 'Wicket'
-//       });
-//     } else {
-//       const striker = batting.batsmen.find(b => b.onStrike);
-//       if (!striker) return;
-
-//       const runs = Math.floor(Math.random() * 7);
-//       batting.runs += runs;
-//       striker.runs += runs;
-//       striker.balls++;
-
-//        // Calculate overs before incrementing totalBalls
-//        const balls = batting.totalBalls || 0;
-//        const completedOvers = Math.floor(balls / 6);
-//        const ballsInCurrentOver = balls % 6;
-//        batting.overs = `${completedOvers}.${ballsInCurrentOver}`;
-
-//        // Now increment the total balls count
-//        batting.totalBalls = balls + 1;
-
-//       match.recentBalls.unshift({
-//         over: batting.overs,
-//         batsman: striker.name,
-//         result: `${runs} run(s)`
-//       });
-//     }
-
-//     // Update balls & overs
-//     // batting.totalBalls++;
-//     // const balls = batting.totalBalls;
-//     // const completedOvers = Math.floor(balls / 6);
-//     // const ballsInOver = balls % 6;
-//     // batting.overs = `${completedOvers}.${ballsInOver}`;
-
-//     if (match.recentBalls.length > 6) {
-//       match.recentBalls = match.recentBalls.slice(0, 6);
-//     }
-//   });
-
-//   try {
-//     fs.writeFileSync(filePath, JSON.stringify(matches, null, 2));
-//     const io = getIo();
-//     const liveMatches = matches.filter(m => m.matchInfo.status === 'Live');
-//     io.emit('liveScoreUpdate', liveMatches);
-//     console.log('Broadcasted live score update');
-//   } catch (err) {
-//     console.error('Write error:', err);
-//   }
-// }, 10000);
-
 setInterval(() => {
   let matches;
   try {
@@ -342,7 +162,7 @@ setInterval(() => {
       }
 
       match.inningsCompleted[match.currentInning] = true;
-      console.log(`Innings ${match.currentInning} completed: Maximum overs reached.`);
+      // console.log(`Innings ${match.currentInning} completed: Maximum overs reached.`);
       // **Prevent further scoring after innings complete**
       return;
     }
@@ -358,13 +178,14 @@ setInterval(() => {
 
     // Always generate and update odds on every ball
     const lagai = Math.floor(Math.random() * 99) + 1;
-    const khai = Math.abs(100 - lagai);
-    const isFavourite = lagai > khai;
+    const khai = lagai + 3;
+    const favouriteTeam = Math.random() > 0.5 ? match.matchInfo.team1 : match.matchInfo.team2;
 
     match.liveScore.odds = {
+      team: favouriteTeam,
       lagai,
       khai,
-      isFavourite
+      isFavourite: true
     };
 
     const isWicket = Math.random() < 0.1;
@@ -383,7 +204,7 @@ setInterval(() => {
 
       // Generate and update odds
       const lagai = Math.floor(Math.random() * 99) + 1;
-      const khai = Math.abs(100 - lagai);
+      const khai = lagai + 3;
       const isFavourite = lagai > khai;
 
       // Set it inside liveScore.odds
@@ -431,17 +252,12 @@ setInterval(() => {
     const io = getIo();
     const liveMatches = matches.filter(m => m.matchInfo.status === 'Live');
     io.emit('liveScoreUpdate', liveMatches);
-    console.log('Broadcasted live score update');
+    // console.log('Broadcasted live score update');
   } catch (err) {
     console.error('Write error:', err);
   }
 }, 20000);
 
 
-
-// setInterval(() => {
-//   console.info('Updating live score...');
-//   updateLiveScores();
-// }, 3000);
 
 module.exports = app;

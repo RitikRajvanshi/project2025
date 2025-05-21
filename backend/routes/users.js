@@ -38,11 +38,11 @@ router.post('/getuserData', (req, res) => {
 })
 
 router.get('/getallusersData', (req, res) => {
-    
+
     const query = `Select * from users`
 
     db.query(query,
-         (err, results) => {
+        (err, results) => {
             if (err) {
                 throw err
             }
@@ -144,97 +144,117 @@ router.post('/adduser', async (req, res) => {
     }
 })
 
-router.post('/edituser',(req,res)=>{
+router.post('/edituser', (req, res) => {
     console.log(req.body);
-    const {mobile_share, match_share, commission_type, match_commission_percentage, session_commission_percentage, user_id} = req.body
+    const { mobile_share, match_share, commission_type, match_commission_percentage, session_commission_percentage, user_id } = req.body
     const query = `update users set commission_type= $1,match_commission_percentage = $2,session_commission_percentage = $3  where user_id = $4`;
 
-    db.query(query,[commission_type, match_commission_percentage, session_commission_percentage, user_id],(err,result)=>{
-        if (err){
+    db.query(query, [commission_type, match_commission_percentage, session_commission_percentage, user_id], (err, result) => {
+        if (err) {
             console.error(err);
             throw err;
         }
 
-        res.status(200).json({message:'User Updated Successfully!'});
+        res.status(200).json({ message: 'User Updated Successfully!' });
     })
 })
 
 
-router.post('/updateStatus',(req,res)=>{
+router.post('/updateStatus', (req, res) => {
     console.log(req.body);
     const status = + req.body.status;
     const user_id = + req.body.user_id;
     const query = `update users set status = $1 where user_id = $2`;
 
-    db.query(query,[status,user_id],(err,result)=>{
-        if (err){
+    db.query(query, [status, user_id], (err, result) => {
+        if (err) {
             console.error(err);
             throw err;
         }
 
-        res.status(200).json({message:'Status Changed!'});
+        res.status(200).json({ message: 'Status Changed!' });
     })
 })
 
-router.post('/updateaccountlock',(req,res)=>{
+router.post('/updateaccountlock', (req, res) => {
     console.log(req.body);
     const account_lock = + req.body.account_lock;
     const user_id = + req.body.user_id;
     const query = `update users set account_lock = $1 where user_id = $2`;
 
-    db.query(query,[account_lock,user_id],(err,result)=>{
-        if (err){
+    db.query(query, [account_lock, user_id], (err, result) => {
+        if (err) {
             console.error(err);
             throw err;
         }
 
-        res.status(200).json({message:'Account Status Changed!'});
+        res.status(200).json({ message: 'Account Status Changed!' });
     })
 })
 
-router.post('/updatebetlock',(req,res)=>{
+router.post('/updatebetlock', (req, res) => {
     console.log(req.body);
     const bet_lock = + req.body.bet_lock;
     const user_id = + req.body.user_id;
     const query = `update users set bet_lock = $1 where user_id = $2`;
 
-    db.query(query,[bet_lock,user_id],(err,result)=>{
-        if (err){
+    db.query(query, [bet_lock, user_id], (err, result) => {
+        if (err) {
             console.error(err);
             throw err;
         }
 
-        res.status(200).json({message:'Betting Status Changed!'});
+        res.status(200).json({ message: 'Betting Status Changed!' });
     })
 })
 
-router.post('/updatePassword',(req,res)=>{
+router.post('/updatePassword', (req, res) => {
     console.log(req.body);
     const password = req.body.newPass;
     const user_id = + req.body.user_id;
     const query = `update users set user_password = $1 where user_id = $2`;
 
-    db.query(query,[password,user_id],(err,result)=>{
-        if (err){
+    db.query(query, [password, user_id], (err, result) => {
+        if (err) {
             console.error(err);
             throw err;
         }
 
-        res.status(200).json({message:'Password Changed!'});
+        res.status(200).json({ message: 'Password Changed!' });
     })
 })
 
 
-router.post('/depositcoins', async(req,res)=>{
-    console.log(req.body);
-    const {parent_account_balance,account_balance, parent_id, user_id} = req.body
+router.post('/depositcoins', async (req, res) => {
+    console.log(req.body, "depositcoins");
+    const { parent_account_balance, account_balance, parent_id, user_id } = req.body
 
     const query = `update users set account_balance = $1 where user_id = $2`;
 
-    await db.query(query, [parent_account_balance,parent_id]) ;
-    await db.query(query, [account_balance,user_id]) ;
+    await db.query(query, [parent_account_balance, parent_id]);
+    await db.query(query, [account_balance, user_id]);
 
-    res.status(200).json({message:'Coins deposited!'});
+    res.status(200).json({ message: 'Coins deposited!' });
+})
+
+router.get('/getAccountStatement', async (req, res) => {
+    try {
+        const query = `select us.user_id, us.user_code,us.account_balance, 
+tr.transaction_id, tr.transaction_type, tr.transaction_date,tr.prev_balance, tr.current_balance, tr.bet_id, tr.description, tr.points,
+bt.match_id, bt.match_date,bt.bet_type, bt.bet, bt.bet_mode , bt.estimated_profit , bt.estimated_loss from users us
+                    join transactions tr on tr.user_id = us.user_id
+                    join bets bt on bt.bet_id = tr.bet_id;`
+
+        const data = await db.query(query);
+        console.log(data);
+        res.status(200).json(data.rows);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Internal Server Error' });
+
+    }
+
 })
 
 
