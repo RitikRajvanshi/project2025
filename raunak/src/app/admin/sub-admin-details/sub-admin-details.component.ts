@@ -208,31 +208,48 @@ export class SubAdminDetailsComponent {
   })
   }
 
- dynamicCoins(event: Event){
-  if(this.parrentaccount < this.coinUpdate.new_coins){
-    event.preventDefault();
-    this.disableSubmit = true;    
-  }
-  else{
-    this.disableSubmit = false;
-    this.coinUpdate.parent_account_balance = this.parrentaccount -  this.coinUpdate.new_coins;
-    this.coinUpdate.account_balance = this.useraccount +  this.coinUpdate.new_coins;
-  }
- }
+  dynamicCoins(event: Event) {
+    const newCoins: any = Number(this.coinsForm.get('new_coins').value);
 
- 
-dynamicCoins2(event: Event){
-  if(this.useraccount < this.coinUpdate.new_coins){
-    event.preventDefault();
-    this.disableSubmit = true;    
-  }
-  else{
-    this.disableSubmit = false;
-    this.coinUpdate.parent_account_balance = this.parrentaccount + this.coinUpdate.new_coins;
-    this.coinUpdate.account_balance = this.useraccount - this.coinUpdate.new_coins;
-  }
- }
+    if (this.parrentaccount < newCoins) {
+      event.preventDefault();
+      this.disableSubmit = true;
+    }
+        let Accountbalance: number;
+      let newAccountbalance: number;
 
+      this.disableSubmit = false;
+
+        Accountbalance = Number(this.parrentaccount) - newCoins;
+        newAccountbalance = Number(this.useraccount) + newCoins;
+      
+
+      this.coinUpdate.parent_account_balance = +Accountbalance.toFixed(2);
+      this.coinUpdate.account_balance = +newAccountbalance.toFixed(2);
+  }
+
+  dynamicCoins2(event: Event) {
+    const newCoins: any = Number(this.coinsForm.get('new_coins').value);
+    if (this.useraccount < this.coinUpdate.new_coins) {
+      event.preventDefault();
+      this.disableSubmit = true;
+    }
+    else {
+      this.disableSubmit = false;
+      let Accountbalance: number;
+      let newAccountbalance: number;
+
+      this.disableSubmit = false;
+      
+      Accountbalance = Number(this.parrentaccount) + newCoins;
+      newAccountbalance = Number(this.useraccount) - newCoins;
+      
+
+      this.coinUpdate.parent_account_balance = +Accountbalance.toFixed(2);
+      this.coinUpdate.account_balance = +newAccountbalance.toFixed(2);
+    }
+  }
+  
   addcoins(){
     const url = environment.ADMIN_URL + environment.ADMIN.DEPOSIT_COINS;
     this.http.post(url,this.coinUpdate).subscribe((results:any)=>{

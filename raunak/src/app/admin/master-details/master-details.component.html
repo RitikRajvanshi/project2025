@@ -70,8 +70,8 @@
       <div class="modal-body" style="max-height: calc(100vh - 300px); overflow-y: auto;">
         <form [formGroup]="passwordForm">
           <div class="mb-3">
-            <label for="recipient-name" class="col-form-label"><span  class="text-danger">*</span>New Password</label>
-            <input type="password" class="form-control form-control-sm" id="recipient-name" formControlName="newPass" [(ngModel)]="passobj.newPass">
+            <label for="master-new-pass" class="col-form-label"><span  class="text-danger">*</span>New Password</label>
+            <input type="password" class="form-control form-control-sm" id="master-new-pass" formControlName="newPass" [(ngModel)]="passobj.newPass">
             <div *ngIf="passwordForm.get('newPass').invalid &&  passwordForm.get('newPass').touched">
               <div class="text-danger fst-italic" *ngIf="passwordForm.get('newPass').errors?.required">Required</div>
               <div class="text-danger fst-italic" *ngIf="passwordForm.get('newPass').errors?.minlength">At least 4 characters long</div>
@@ -79,8 +79,8 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="message-text" class="col-form-label">Confirm Password</label>
-            <input type="text" class="form-control form-control-sm" id="recipient-name" formControlName="confirmPass" [(ngModel)]="passobj.changePass">
+            <label for="master-confirm-pass" class="col-form-label">Confirm Password</label>
+            <input type="text" class="form-control form-control-sm" id="master-confirm-pass" formControlName="confirmPass" [(ngModel)]="passobj.changePass">
             <div *ngIf="passwordForm.get('confirmPass').invalid &&  passwordForm.get('confirmPass').touched">
               <div class="text-danger fst-italic" *ngIf="passwordForm.get('confirmPass').errors?.required">Required</div>
               <div class="text-danger fst-italic" *ngIf="passwordForm.get('confirmPass').errors?.minlength">At least 4 characters long</div>
@@ -116,16 +116,16 @@
             <section class="coins">
             <div class="w-50 parent_coins">
               <h6>Parent Coins:</h6>
-              <h6>{{coinUpdate.parent_account_balance}}</h6>
+              <h6>{{coinUpdate.parent_account_balance | number: '1.2-2'}}</h6>
             </div>
             <div class="w-50 users_coins">
               <h6>Users Coins:</h6>
-              <h6> <h6>{{coinUpdate.account_balance}}</h6></h6>
+              <h6> <h6>{{coinUpdate.account_balance | number: '1.2-2'}}</h6></h6>
             </div>
           </section>
           </div>
           <div class="mb-3">
-            <input type="number"  #deposit class="form-control form-control-sm" placeholder="Enter Coins" id="recipient-name2" formControlName="new_coins" [(ngModel)]="coinUpdate.new_coins"  min="0" onkeyup="if(this.value<0){this.value= this.value * -1}"  (keyup)="dynamicCoins($event)">
+            <input type="number"  #deposit class="form-control form-control-sm" placeholder="Enter Coins" id="master-deposit" formControlName="new_coins" [(ngModel)]="coinUpdate.new_coins"  min="0" onkeyup="if(this.value<0){this.value= this.value * -1}"  (keyup)="dynamicCoins($event)">
               <div *ngIf="coinsForm.get('new_coins').invalid &&  coinsForm.get('new_coins').touched">
               <div class="text-danger fst-italic" *ngIf="coinsForm.get('new_coins').errors?.required">Required</div>
             </div>
@@ -159,16 +159,16 @@
             <section class="coins">
             <div class="w-50 parent_coins">
               <h6>Parent Coins:</h6>
-              <h6>{{coinUpdate.parent_account_balance}}</h6>
+              <h6>{{coinUpdate.parent_account_balance | number: '1.2-2'}}</h6>
             </div>
             <div class="w-50 users_coins">
               <h6>Users Coins:</h6>
-              <h6> <h6>{{coinUpdate.account_balance}}</h6></h6>
+              <h6> <h6>{{coinUpdate.account_balance | number: '1.2-2'}}</h6></h6>
             </div>
           </section>
           </div>
           <div class="mb-3">
-            <input type="number"  #deposit class="form-control form-control-sm" placeholder="Enter Coins" id="recipient-name3" formControlName="new_coins" [(ngModel)]="coinUpdate.new_coins"  min="0" onkeyup="if(this.value<0){this.value= this.value * -1}"  (keyup)="dynamicCoins2($event)">
+            <input type="number"  #withdraw class="form-control form-control-sm" placeholder="Enter Coins" id="maser-withdraw" formControlName="new_coins" [(ngModel)]="coinUpdate.new_coins"  min="0" onkeyup="if(this.value<0){this.value= this.value * -1}"  (keyup)="dynamicCoins2($event)">
               <div *ngIf="coinsForm.get('new_coins').invalid &&  coinsForm.get('new_coins').touched">
               <div class="text-danger fst-italic" *ngIf="coinsForm.get('new_coins').errors?.required">Required</div>
             </div>

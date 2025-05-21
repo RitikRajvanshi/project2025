@@ -59,12 +59,12 @@ export class ClientDetailsComponent {
     this.changePass();
     this.addcoinsform();
 
-    this.coinsForm.get('new_coins')?.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe((value: any) => {
-        const newCoins = Number(value);
-        this.processCoinUpdate(newCoins);
-      });
+    // this.coinsForm.get('new_coins')?.valueChanges
+    //   .pipe(debounceTime(500))
+    //   .subscribe((value: any) => {
+    //     const newCoins = Number(value);
+    //     this.processCoinUpdate(newCoins);
+    //   });
 
   }
 
@@ -231,42 +231,38 @@ export class ClientDetailsComponent {
       event.preventDefault();
       this.disableSubmit = true;
     }
-    this.processCoinUpdate(newCoins);
-  }
-
-  processCoinUpdate(newCoins: number) {
-    if (this.parrentaccount < newCoins) {
-      this.disableSubmit = true;
-    } else {
-      let Accountbalance: number;
+        let Accountbalance: number;
       let newAccountbalance: number;
 
       this.disableSubmit = false;
 
-      if (this.isDeposit) {
         Accountbalance = Number(this.parrentaccount) - newCoins;
         newAccountbalance = Number(this.useraccount) + newCoins;
-      }
-      else {
-        Accountbalance = Number(this.parrentaccount) - newCoins;
-        newAccountbalance = Number(this.useraccount) + newCoins;
-      }
+      
+
       this.coinUpdate.parent_account_balance = +Accountbalance.toFixed(2);
       this.coinUpdate.account_balance = +newAccountbalance.toFixed(2);
-    }
   }
 
-
-
   dynamicCoins2(event: Event) {
+    const newCoins: any = Number(this.coinsForm.get('new_coins').value);
     if (this.useraccount < this.coinUpdate.new_coins) {
       event.preventDefault();
       this.disableSubmit = true;
     }
     else {
       this.disableSubmit = false;
-      this.coinUpdate.parent_account_balance = this.parrentaccount + this.coinUpdate.new_coins;
-      this.coinUpdate.account_balance = this.useraccount - this.coinUpdate.new_coins;
+      let Accountbalance: number;
+      let newAccountbalance: number;
+
+      this.disableSubmit = false;
+      
+      Accountbalance = Number(this.parrentaccount) + newCoins;
+      newAccountbalance = Number(this.useraccount) - newCoins;
+      
+
+      this.coinUpdate.parent_account_balance = +Accountbalance.toFixed(2);
+      this.coinUpdate.account_balance = +newAccountbalance.toFixed(2);
     }
   }
 
