@@ -66,23 +66,31 @@ router.post('/specific-match', async (req, res) => {
 router.post('/place-bet', async (req, res) => {
     try {
         console.log(req.body, "place-bet");
-        const { user_id, match_id, bet, loss, transaction_type, bet_type, team1, team2, betOnteam,estimated_profit, estimated_loss} = req.body;
+        const { user_id, match_id, bet, loss, transaction_type, bet_type, team1, team2, betOnteam,estimated_profit, estimated_loss,mode} = req.body;
         const points = -loss;
         const todayDate = moment().format('YYYY-MM-DD HH:mm:ss');
         const team1VSteam2 = `${team1} v ${team2}`;
         const description = `Cricket / ${team1VSteam2} / Match / ${team1VSteam2} / ${match_id} / ${betOnteam}`
         const insertQuery = `INSERT INTO bets(match_id,user_id, match_date, bet, bet_type, description,estimated_profit , estimated_loss ) values($1, $2, $3, $4, $5, $6 , $7, $8) returning *`;
         const substractQuery = `UPDATE users set account_balance= account_balance + $1 where user_id=$2`;
-        const transactionQuery = `INSERT INTO transactions(transaction_type, points, transaction_date, bet_id, user_id, description,prev_balance,current_balance) values($1, $2, $3,$4, $5,$6,$7,$8)`;
-        const getUsersData = `SELECT * FROM users;`;
+        const transactionQuery = `INSERT INTO transactions(transaction_type, points, transaction_date, bet_id, user_id, description,prev_balance,current_balance,mode) values($1, $2, $3,$4, $5,$6,$7,$8,$9)`;
+        const getUsersData = `SELECT * FROM users where user_id = $1;`;
 
         await db.query('BEGIN');
         const result = await db.query(insertQuery, [match_id, user_id, todayDate, bet, bet_type, description, estimated_profit, estimated_loss]);
         const betId = result.rows[0].bet_id;
         console.log(betId, "betId");
 
-        const allUsers = await db.query(getUsersData);
-        const filteredUser = allUsers.rows.find((u) => u.user_id == user_id);
+        // const allUsers = await db.query(getUsersData);
+        // const filteredUser = allUsers.rows.find((u) => u.user_id == user_id);
+
+        await db.query('BEGIN');
+    
+        const userResult = await db.query(getUsersData, [user_id]);
+        const filteredUser = userResult.rows[0];
+        if(!filteredUser){
+            throw new Error('User not found');
+        }
 
         const currentBalace = Number(filteredUser.account_balance) + Number(points);
         
@@ -90,7 +98,7 @@ router.post('/place-bet', async (req, res) => {
         console.log(Number(filteredUser.account_balance).toFixed(2));
        
         await db.query(substractQuery, [points, user_id]);
-        await db.query(transactionQuery, [transaction_type, points, todayDate, betId, user_id, description, Number(filteredUser.account_balance), currentBalace])
+        await db.query(transactionQuery, [transaction_type, points, todayDate, betId, user_id, description, Number(filteredUser.account_balance), currentBalace, mode])
         await db.query('COMMIT');
         res.status(200).json({ message: 'Bet placed successfully', bet_id: betId });
     } catch (error) {
@@ -99,5 +107,19 @@ router.post('/place-bet', async (req, res) => {
         res.status(500).json(error);
     }
 });
+
+
+router.post('/updateStake', async(req,res)=>{
+    try {
+        const {user_id ,chips} = req.body;
+        const updatequery = `Update stake set stake_value=$1 where user_id=$2`;
+        await db.query(updatequery, [chips, user_id]);
+        res.status(200).json({message:'Stake Updated successfully!'});
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message:'Inernal Server Error'});
+    }
+})
 
 module.exports = router;
