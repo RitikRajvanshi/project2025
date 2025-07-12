@@ -33,15 +33,15 @@
       </td>
         <td><h6>{{data.user_name}}</h6>
           <button class="bg-danger text-light" [routerLink]="['/admin/edit-user',data.user_id]">Edit</button>
-          <button class="bg-success text-light"data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" (click)="sendinguser(data,'Change Pass')">Change Pass</button></td>
+          <button class="bg-success text-light"data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" (click)="sendinguser(data)">Change Pass</button></td>
           <td><h5>{{data.account_balance}}</h5>
             <button class="bg-danger text-light">Statement</button>
         </td>
         <td><h5>Deposit</h5>
-          <button class="bg-warning" data-bs-toggle="modal" data-bs-target="#exampleModal2" data-bs-whatever="@mdo2" (click)="sendinguser(data ,'Deposit')">Deposit</button>
+          <button class="bg-warning" data-bs-toggle="modal" data-bs-target="#exampleModal2" data-bs-whatever="@mdo2" (click)="sendinguser(data)">Deposit</button>
       </td>
       <td><h5>Withdraw</h5>
-          <button class="bg-success text-light"  data-bs-toggle="modal" data-bs-target="#exampleModal3" data-bs-whatever="@mdo3" (click)="sendinguser(data,'Withdraw')">Withdraw</button>
+          <button class="bg-success text-light"  data-bs-toggle="modal" data-bs-target="#exampleModal3" data-bs-whatever="@mdo3" (click)="sendinguser(data)">Withdraw</button>
       </td>
         <td>0.00</td>
         <td>{{data.commission_type}}</td>

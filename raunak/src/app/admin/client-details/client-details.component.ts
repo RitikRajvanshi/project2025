@@ -5,7 +5,8 @@ import { FormControl, FormGroup, Validators, ValidatorFn, AbstractControl } from
 import Swal from 'sweetalert2';
 import { debounceTime } from 'rxjs/operators';
 import { Component, ViewChild, ElementRef } from '@angular/core';
-
+import { AdminService } from 'src/app/services/admin.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-client-details',
@@ -45,8 +46,28 @@ export class ClientDetailsComponent {
   useraccount = 0;
   disableSubmit = false;
   isDeposit: boolean = true;
+  transactionArray: any[] = [];
+transactionObjforuser = {
+    user_id: 0,
+    transaction_type: '',
+    prev_balance: 0.00,
+    current_balance: 0.00,
+    description: '',
+    points: 0.00,
+    mode:'charge'
+  }
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  transactionObjforparent = {
+    user_id: 0,
+    transaction_type: '',
+    prev_balance: 0.00,
+    current_balance: 0.00,
+    description: '',
+    points: 0.00,
+    mode:'charge'
+  }
+
+  constructor(private http: HttpClient, private route: ActivatedRoute, private adminService: AdminService) {
 
   }
 
@@ -82,9 +103,15 @@ export class ClientDetailsComponent {
         user_id: + user_data,
       }
 
+      this.transactionObjforuser.user_id = Number(user_data);
+
+
+      // console.log(UserId, "UserId");
+
       this.http.post<any>(url, UserId).subscribe((results: any) => {
-        console.log(results, "results");
+        // console.log(results, "results");
         this.users_data = results[0];
+
         this.role = results[0].level;
         this.clientData(results[0]);
       })
@@ -96,19 +123,21 @@ export class ClientDetailsComponent {
     const url = environment.ADMIN_URL + environment.ADMIN.GET_PARENT_USER_DATA_BY_USERID;
 
     this.http.post(url, user_id).subscribe((results: any) => {
-      console.log(results, "parentdata");
+      // console.log(results, "parentdata");
       this.coinUpdate.parent_code = results[0]?.parent_code;
-      this.coinUpdate.parent_account_balance = results[0]?.parent_account_balance;
-      this.parrentaccount = results[0]?.parent_account_balance;
+      this.coinUpdate.parent_account_balance = Number(results[0]?.parent_account_balance);
+      this.parrentaccount = Number(results[0]?.parent_account_balance);
+      this.transactionObjforparent.user_id = results[0]?.user_id;
+      this.transactionObjforparent.prev_balance = this.parrentaccount;
     })
 
   }
 
   clientData(created_by: any) {
     const url = environment.ADMIN_URL + environment.ADMIN.GET_USERS_HIERARCHICAL_DATA;
-    console.log(url, "URL")
+    // console.log(url, "URL")
     this.http.post<any>(url, created_by).subscribe((results: any) => {
-      console.log(results, "gethierarhchaldata");
+      // console.log(results, "gethierarhchaldata");
       // this.subAdminDataArray = results;
 
       this.clientDataArray = results.filter((data: any) => {
@@ -189,18 +218,21 @@ export class ClientDetailsComponent {
   //   }
   // }
 
-  sendinguser(data: any, operation: string) {
+  sendinguser(data: any) {
     this.passobj.user_id = data.user_id;
     console.log(data, "dataforcoins")
     this.coinUpdate.user_id = data.user_id;
     // operation === 'Deposit' ? this.isDeposit == true : this.isDeposit == false;
-    this.isDeposit = operation === 'Deposit';
+
+    // this.isDeposit = operation === 'Deposit';
+
     this.coinUpdate.parent_id = data.created_by;
 
     this.coinUpdate.user_code = data.user_code;
     this.coinUpdate.account_balance = data.account_balance;
     this.useraccount = data.account_balance;
-    console.log(this.isDeposit, "this.isDeposit")
+    this.transactionObjforuser.prev_balance = Number(data.account_balance);
+    // console.log(this.isDeposit, "this.isDeposit")
     setTimeout(() => {
       this.getparentdatabyuserid(this.coinUpdate);
     }, 500);
@@ -226,53 +258,84 @@ export class ClientDetailsComponent {
 
   dynamicCoins(event: Event) {
     const newCoins: any = Number(this.coinsForm.get('new_coins').value);
+    this.transactionObjforuser.transaction_type = 'deposit';
+    this.transactionObjforparent.transaction_type = 'withdrawl';
 
     if (this.parrentaccount < newCoins) {
       event.preventDefault();
       this.disableSubmit = true;
     }
-        let Accountbalance: number;
-      let newAccountbalance: number;
+    let Accountbalance: number;
+    let newAccountbalance: number;
 
-      this.disableSubmit = false;
+    this.disableSubmit = false;
 
-        Accountbalance = Number(this.parrentaccount) - newCoins;
-        newAccountbalance = Number(this.useraccount) + newCoins;
-      
+    Accountbalance = Number(this.parrentaccount) - newCoins;
+    newAccountbalance = Number(this.useraccount) + newCoins;
 
-      this.coinUpdate.parent_account_balance = +Accountbalance.toFixed(2);
-      this.coinUpdate.account_balance = +newAccountbalance.toFixed(2);
+
+    this.coinUpdate.parent_account_balance = +Accountbalance.toFixed(2);
+    this.coinUpdate.account_balance = +newAccountbalance.toFixed(2);
+
+    this.transactionObjforuser.current_balance = Number(this.coinUpdate.account_balance.toFixed(2));
+
+    this.transactionObjforuser.description = `Mobile Charge by ${newCoins} coins`;
+
+    this.transactionObjforparent.description = `Withdraw ${newCoins} coins`;
+
+    this.transactionObjforuser.points = Number(newCoins);
+    this.transactionObjforparent.points = -Number(newCoins);
+
+    this.transactionObjforparent.current_balance = Number(this.transactionObjforparent.prev_balance.toFixed(2)) + Number(this.transactionObjforparent.points.toFixed(2));
+
   }
 
   dynamicCoins2(event: Event) {
     const newCoins: any = Number(this.coinsForm.get('new_coins').value);
+
+    this.transactionObjforuser.transaction_type = 'withdrawl';
+    this.transactionObjforparent.transaction_type = 'deposit';
+
     if (this.useraccount < this.coinUpdate.new_coins) {
       event.preventDefault();
       this.disableSubmit = true;
     }
     else {
       this.disableSubmit = false;
+
       let Accountbalance: number;
       let newAccountbalance: number;
 
       this.disableSubmit = false;
-      
+
       Accountbalance = Number(this.parrentaccount) + newCoins;
       newAccountbalance = Number(this.useraccount) - newCoins;
-      
+
 
       this.coinUpdate.parent_account_balance = +Accountbalance.toFixed(2);
       this.coinUpdate.account_balance = +newAccountbalance.toFixed(2);
+
+      this.transactionObjforuser.description = `User minus by ${newCoins} coins`;
+      this.transactionObjforuser.points = -Number(newCoins);
+      this.transactionObjforparent.points = Number(newCoins);
+
+      this.transactionObjforparent.current_balance = Number(this.transactionObjforparent.prev_balance.toFixed(2)) + Number(this.transactionObjforparent.points.toFixed(2));
+
+      this.transactionObjforuser.current_balance = Number(this.coinUpdate.account_balance.toFixed(2));
+
+      this.transactionObjforuser.description = `Withdraw ${newCoins} coins`;
+
+      this.transactionObjforparent.description = `Deposit ${newCoins} coins`;
     }
   }
 
   addcoins() {
 
     const url = environment.ADMIN_URL + environment.ADMIN.DEPOSIT_COINS;
-    console.log(this.coinUpdate, "this.coinUpdate")
+    // console.log(this.coinUpdate, "this.coinUpdate")
 
     this.http.post(url, this.coinUpdate).subscribe((results: any) => {
-      console.log(results);
+      // console.log(results);
       Swal.fire({
         icon: "success",
         title: "Coins Deposited Successfully!",
@@ -286,6 +349,12 @@ export class ClientDetailsComponent {
           this.closebutton2.nativeElement.click();
         }, 100);
 
+        const transactions = [
+          this.transactionObjforuser,   // credit
+          this.transactionObjforparent  // withdraw
+        ];
+
+        this.saveTransaction(transactions);
       })
     })
   }
@@ -293,7 +362,7 @@ export class ClientDetailsComponent {
   substractCoins() {
     const url = environment.ADMIN_URL + environment.ADMIN.DEPOSIT_COINS;
     this.http.post(url, this.coinUpdate).subscribe((results: any) => {
-      console.log(results);
+      // console.log(results);
       Swal.fire({
         icon: "success",
         title: "Coins withdraw Successfully!",
@@ -305,6 +374,13 @@ export class ClientDetailsComponent {
         setTimeout(() => {
           this.closebutton3.nativeElement.click();
         }, 100);
+
+       const transactions = [
+          this.transactionObjforuser,   // credit
+          this.transactionObjforparent  // withdraw
+        ];
+
+        this.saveTransaction(transactions);
 
       })
     })
@@ -348,6 +424,18 @@ export class ClientDetailsComponent {
 
     this.passwordForm.get('newPass').markAsUntouched();
     this.passwordForm.get('confirmPass').markAsUntouched();
+  }
+
+  async saveTransaction(data: Array<any>) {
+    try {
+      // Modify user transaction (credit)
+      const result = await firstValueFrom(this.adminService.saveTransaction(data));
+      console.info(result, "saveTransaction");
+
+    }
+    catch (error) {
+      console.error(error);
+    }
   }
 
 

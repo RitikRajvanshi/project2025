@@ -45,7 +45,8 @@ export const environment = {
         ACCOUNT_LOCK:'updateaccountlock',
         BET_LOCK:'updatebetlock',
         GETLEVEL:'getlevelData',
-        GETALLUSERSDATA:'getallusersData'
+        GETALLUSERSDATA:'getallusersData',
+        SAVETRANSACTION:'saveTransaction'
 
     },
     TEACHER:{
