@@ -28,19 +28,19 @@
     </tr>
       <tr class="table">
         <td>Client Name</td>
-        <td>Client Name</td>
+        <td>{{users_data?.user_name}}</td>
       </tr>
       <tr class="table">
         <td>Client Code</td>
-        <td>Client Code</td>
+        <td>{{users_data?.user_code}}</td>
       </tr>
       <tr class="table">
         <td>Chips</td>
-        <td>1000</td>
+        <td>{{users_data?.account_balance}}</td>
       </tr>
       <tr class="table">
         <td>Date of joining</td>
-        <td>12-04-2024</td>
+        <td>{{users_data?.created_date | date:'dd-MM-yyyy'}}</td>
       </tr>
     </tbody>
   </table>

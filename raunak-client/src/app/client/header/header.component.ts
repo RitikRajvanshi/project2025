@@ -1,6 +1,6 @@
 import { Component, ElementRef, Renderer2, ViewChild, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
+import { AdminService } from 'src/app/services/admin.service';
 declare var bootstrap: any; // Declare Bootstrap globally
 
 
@@ -17,14 +17,16 @@ export class HeaderComponent {
   userData:any;
 
 
-  constructor(private renderer: Renderer2,private el: ElementRef, private route:Router, private userService:UserService, public router:Router) {
+  constructor(private renderer: Renderer2,private el: ElementRef, private route:Router, public router:Router, private adminService:AdminService) {
 
     // const userData:any = localStorage.getItem('user_data');
     // this.userData = JSON.parse(userData);
-    this.userService.userData$.subscribe((data)=>{
+    this.adminService.userData$.subscribe((data)=>{
       this.userData = data;
+      console.log(this.userData, "userdata");
     })
   }
+
 
   ngAfterViewInit(): void {
     const currentUrl = this.router.url;
@@ -66,7 +68,7 @@ export class HeaderComponent {
 
     signOut(){
       localStorage.clear();
-      this.userService.updateUserData(null); // Reset BehaviorSubject
+      this.adminService.updateUserData(null); // Reset BehaviorSubject
       this.route.navigate(['']);
     }
 }

@@ -4,9 +4,9 @@
     <div class="chip-popup-header">
       <span>Chip Setting</span>
     </div>
-    <div class="chip-popup-body">
+    <!-- <div class="chip-popup-body">
       <div class="chip-grid">
-        <!-- Left Column -->
+    
         <div>
           <div class="chip-row"><label>Chips Name 1:</label><input type="text" value="100"></div>
           <div class="chip-row"><label>Chips Name 2:</label><input type="text" value="1K"></div>
@@ -21,7 +21,7 @@
           <div class="chip-row"><label>Chips Name 11:</label><input type="text" value="2L"></div>
         </div>
 
-        <!-- Right Column -->
+ 
         <div>
           <div class="chip-row"><label>Chip Value 1:</label><input type="text" value="100"></div>
           <div class="chip-row"><label>Chip Value 2:</label><input type="text" value="1000"></div>
@@ -36,9 +36,29 @@
           <div class="chip-row"><label>Chip Value 11:</label><input type="text" value="200000"></div>
         </div>
       </div>
+    </div> -->
+
+    <div class="chip-popup-body">
+  <div class="chip-grid">
+    <!-- Left Column: Keys -->
+    <div>
+      <div class="chip-row" *ngFor="let chip of chipEntries; let i = index">
+        <label>Chips Name {{ i + 1 }}:</label>
+        <input type="text"  [(ngModel)]="chip.key" />
+      </div>
     </div>
+
+    <!-- Right Column: Values -->
+    <div>
+      <div class="chip-row" *ngFor="let chip of chipEntries; let i = index">
+        <label>Chip Value {{ i + 1 }}:</label>
+        <input type="text"  [(ngModel)]="chip.value" />
+      </div>
+    </div>
+  </div>
+</div>
     <div class="chip-popup-footer">
-      <button class="update-chip-btn">Update Chip Setting</button>
+      <button class="update-chip-btn" (click)="updateStakes()">Update Chip Setting</button>
     </div>
   </div>
 </div>

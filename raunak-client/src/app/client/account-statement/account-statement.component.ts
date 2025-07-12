@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import * as moment from 'moment';
 import { firstValueFrom } from 'rxjs';
-import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
+import { AdminService } from 'src/app/services/admin.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-account-statement',
@@ -45,9 +46,9 @@ export class AccountStatementComponent {
     }
   ];
 
-  constructor(private userService:UserService){
+  constructor(private adminService:AdminService, private sharedService:SharedService){
 
-    this.userData = this.userService.getLocalStorageUser();
+    this.userData = this.adminService.getLocalStorageUser();
     console.log(this.userData, "this.accountData");
   }
 
@@ -57,7 +58,8 @@ export class AccountStatementComponent {
 
   async getAccountData (){
       try{
-        const result:any = await firstValueFrom(this.userService.getAccountStatement());
+        const result:any = await firstValueFrom(this.sharedService.getAccountStatement());
+
 
         const filteredData = result
         .filter((item:any)=> item.user_id == this.userData.user_id)
@@ -67,7 +69,6 @@ export class AccountStatementComponent {
           return {...data , transaction_date:filteredtransactionDate , match_date:filteredmatchDate};
         })
        
-
         this.accountData=filteredData;
         this.itemsData = this.accountData;
         this.totalItems = this.accountData.length;

@@ -151,53 +151,57 @@
               <th class="bg-light">KHAI</th>
             </tr>
           </thead>
-       <tbody>
-  <tr *ngFor="let items of matchFulldatainarray">
-    <td class="team-name">
-      <div class="d-flex justify-content-between w-100">
-    <span>{{ items.matchInfo.team1 }}</span>
-    <span class="me-3">{{estimatedProfit.profit || 0}}</span>
-  </div>
-    </td>
-    <!-- <td class="zero-val">0</td> -->
+          <tbody>
+            <tr *ngFor="let items of matchFulldatainarray">
+              <td class="team-name">
+                <div class="d-flex justify-content-between w-100">
+                  <span>{{ items.matchInfo.team1 }}</span>
+                  <span class="me-3">{{estimatedProfit.profit || 0}}</span>
+                </div>
+              </td>
+              <!-- <td class="zero-val">0</td> -->
 
-    <td class="lagai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite"  (click)="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite ? null : openBetPabel(items?.liveScore?.odds[items?.matchInfo?.team1].lagai, 'lagai',items?.matchInfo?.team1 )">
-      {{ items.liveScore.odds[items.matchInfo.team1]?.lagai }}
-      <span class="suspended-text"
-        *ngIf="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">Suspended</span>
-    </td>
-    <td class="khai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite" (click)="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite ? null : openBetPabel(items?.liveScore?.odds[items?.matchInfo?.team1].khai, 'khai', items?.matchInfo?.team1)">
-      {{ items.liveScore.odds[items.matchInfo.team1]?.khai }}
-      <span class="suspended-text"
-        *ngIf="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">Suspended</span>
-    </td>
-  </tr>
+              <td class="lagai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite"
+                (click)="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite ? null : openBetPabel(items?.liveScore?.odds[items?.matchInfo?.team1].lagai, 'lagai',items?.matchInfo?.team1 )">
+                {{ items.liveScore.odds[items.matchInfo.team1]?.lagai }}
+                <span class="suspended-text"
+                  *ngIf="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">Suspended</span>
+              </td>
+              <td class="khai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite"
+                (click)="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite ? null : openBetPabel(items?.liveScore?.odds[items?.matchInfo?.team1].khai, 'khai', items?.matchInfo?.team1)">
+                {{ items.liveScore.odds[items.matchInfo.team1]?.khai }}
+                <span class="suspended-text"
+                  *ngIf="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">Suspended</span>
+              </td>
+            </tr>
 
-  <tr *ngFor="let items of matchFulldatainarray">
-   <td class="team-name">
-      <div class="d-flex justify-content-between w-100">
-    <span>{{ items.matchInfo.team2 }}</span>
-    <span class="me-3">{{estimatedProfit.loss || 0}}</span>
-  </div>
-    </td>
-    <!-- <td class="zero-val">0</td> -->
+            <tr *ngFor="let items of matchFulldatainarray">
+              <td class="team-name">
+                <div class="d-flex justify-content-between w-100">
+                  <span>{{ items.matchInfo.team2 }}</span>
+                  <span class="me-3">{{estimatedProfit.loss || 0}}</span>
+                </div>
+              </td>
+              <!-- <td class="zero-val">0</td> -->
 
-    <td class="lagai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite" (click)="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite ? null : openBetPabel(items?.liveScore?.odds[items?.matchInfo?.team2].lagai, 'lagai', items?.matchInfo?.team2)">
-      {{ items.liveScore.odds[items.matchInfo.team2]?.lagai }}
-      <span class="suspended-text"
-        *ngIf="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite">Suspended</span>
-    </td>
-    <td class="khai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite" (click)="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite ? null : openBetPabel(items?.liveScore?.odds[items?.matchInfo?.team2].khai, 'khai', items?.matchInfo?.team2)">
-      {{ items.liveScore.odds[items.matchInfo.team2]?.khai }}
-      <span class="suspended-text"
-        *ngIf="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite">Suspended</span>
-    </td>
-  </tr>
-</tbody>
+              <td class="lagai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite"
+                (click)="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite ? null : openBetPabel(items?.liveScore?.odds[items?.matchInfo?.team2].lagai, 'lagai', items?.matchInfo?.team2)">
+                {{ items.liveScore.odds[items.matchInfo.team2]?.lagai }}
+                <span class="suspended-text"
+                  *ngIf="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite">Suspended</span>
+              </td>
+              <td class="khai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite"
+                (click)="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite ? null : openBetPabel(items?.liveScore?.odds[items?.matchInfo?.team2].khai, 'khai', items?.matchInfo?.team2)">
+                {{ items.liveScore.odds[items.matchInfo.team2]?.khai }}
+                <span class="suspended-text"
+                  *ngIf="!items.liveScore.odds[items.matchInfo.team2]?.isFavourite">Suspended</span>
+              </td>
+            </tr>
+          </tbody>
 
         </table>
 
-         <table class="table custom-table table-bordered">
+        <table class="table custom-table table-bordered">
           <thead class="table-header text-center">
             <tr>
               <th class="match-odds-title">Toss Book </th>
@@ -206,23 +210,23 @@
               <th class="bg-light">{{matchData?.matchInfo.team2}}</th>
             </tr>
           </thead>
-       <tbody>
-  <tr *ngFor="let items of matchFulldatainarray">
-    <td class="team-name">WHO WILL WIN THE TOSS</td>
-    <!-- <td class="zero-val">0</td> -->
+          <tbody>
+            <tr *ngFor="let items of matchFulldatainarray">
+              <td class="team-name">WHO WILL WIN THE TOSS</td>
+              <!-- <td class="zero-val">0</td> -->
 
-    <td class="lagai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">
-      {{ items.liveScore.odds[items.matchInfo.team1]?.lagai }}
-      <span class="suspended-text"
-        *ngIf="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">Suspended</span>
-    </td>
-    <td class="khai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">
-      {{ items.liveScore.odds[items.matchInfo.team1]?.khai }}
-      <span class="suspended-text"
-        *ngIf="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">Suspended</span>
-    </td>
-  </tr>
-</tbody>
+              <td class="lagai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">
+                {{ items.liveScore.odds[items.matchInfo.team1]?.lagai }}
+                <span class="suspended-text"
+                  *ngIf="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">Suspended</span>
+              </td>
+              <td class="khai-col" [class.suspended]="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">
+                {{ items.liveScore.odds[items.matchInfo.team1]?.khai }}
+                <span class="suspended-text"
+                  *ngIf="!items.liveScore.odds[items.matchInfo.team1]?.isFavourite">Suspended</span>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
 
@@ -263,7 +267,11 @@
             </div>
 
             <div class="d-flex flex-wrap justify-content-center">
-              <button class="btn btn-dark amount-btn" value=100 (click)="getStake(100)">100</button>
+              <button *ngFor="let chip of chipEntries" class="btn btn-dark amount-btn" [value]="chip.value"
+                (click)="getStake(chip.value)">
+                {{ chip.key }}
+              </button>
+              <!-- <button class="btn btn-dark amount-btn" value=100 (click)="getStake(100)">100</button>
               <button class="btn btn-dark amount-btn" value=1000 (click)="getStake(1000)">1K</button>
               <button class="btn btn-dark amount-btn" value=2000 (click)="getStake(2000)">2K</button>
               <button class="btn btn-dark amount-btn" value=3000 (click)="getStake(3000)">3K</button>
@@ -274,14 +282,15 @@
               <button class="btn btn-dark amount-btn" value=50000 (click)="getStake(50000)">50K</button>
               <button class="btn btn-dark amount-btn" value=100000 (click)="getStake(100000)">1L</button>
               <button class="btn btn-dark amount-btn" value=200000 (click)="getStake(200000)">2L</button>
-              <button class="btn btn-danger amount-btn" value=1000000 (click)="getStake(0)">C</button>
+              <button class="btn btn-danger amount-btn" value=1000000 (click)="getStake(0)">C</button> -->
             </div>
 
             <div class="d-flex justify-content-between action-buttons mt-3">
 
               <button class="btn btn-danger w-50 me-2" (click)="clearAll()">Clear All</button>
 
-              <button class="btn btn-success w-50" (click)="placeBet()" [disabled]="!this.oddsValue.stake">Place Bet</button>
+              <button class="btn btn-success w-50" (click)="placeBet()" [disabled]="!this.oddsValue.stake">Place
+                Bet</button>
             </div>
           </div>
         </div>
@@ -335,39 +344,25 @@
     </div>
     <div class="chip-popup-body">
       <div class="chip-grid">
-        <!-- Left Column -->
-        <div>
-          <div class="chip-row"><label>Chips Name 1:</label><input type="text" value="100"></div>
-          <div class="chip-row"><label>Chips Name 2:</label><input type="text" value="1K"></div>
-          <div class="chip-row"><label>Chips Name 3:</label><input type="text" value="2K"></div>
-          <div class="chip-row"><label>Chips Name 4:</label><input type="text" value="3K"></div>
-          <div class="chip-row"><label>Chips Name 5:</label><input type="text" value="5K"></div>
-          <div class="chip-row"><label>Chips Name 6:</label><input type="text" value="10K"></div>
-          <div class="chip-row"><label>Chips Name 7:</label><input type="text" value="20K"></div>
-          <div class="chip-row"><label>Chips Name 8:</label><input type="text" value="25K"></div>
-          <div class="chip-row"><label>Chips Name 9:</label><input type="text" value="50K"></div>
-          <div class="chip-row"><label>Chips Name 10:</label><input type="text" value="1L"></div>
-          <div class="chip-row"><label>Chips Name 11:</label><input type="text" value="2L"></div>
-        </div>
-
-        <!-- Right Column -->
-        <div>
-          <div class="chip-row"><label>Chip Value 1:</label><input type="text" value="100"></div>
-          <div class="chip-row"><label>Chip Value 2:</label><input type="text" value="1000"></div>
-          <div class="chip-row"><label>Chip Value 3:</label><input type="text" value="2000"></div>
-          <div class="chip-row"><label>Chip Value 4:</label><input type="text" value="3000"></div>
-          <div class="chip-row"><label>Chip Value 5:</label><input type="text" value="5000"></div>
-          <div class="chip-row"><label>Chip Value 6:</label><input type="text" value="10000"></div>
-          <div class="chip-row"><label>Chip Value 7:</label><input type="text" value="20000"></div>
-          <div class="chip-row"><label>Chip Value 8:</label><input type="text" value="25000"></div>
-          <div class="chip-row"><label>Chip Value 9:</label><input type="text" value="50000"></div>
-          <div class="chip-row"><label>Chip Value 10:</label><input type="text" value="100000"></div>
-          <div class="chip-row"><label>Chip Value 11:</label><input type="text" value="200000"></div>
-        </div>
+    <!-- Left Column: Keys -->
+    <div>
+      <div class="chip-row" *ngFor="let chip of chipEntries; let i = index">
+        <label>Chips Name {{ i + 1 }}:</label>
+        <input type="text"  [(ngModel)]="chip.key" />
       </div>
     </div>
+
+    <!-- Right Column: Values -->
+    <div>
+      <div class="chip-row" *ngFor="let chip of chipEntries; let i = index">
+        <label>Chip Value {{ i + 1 }}:</label>
+        <input type="text"  [(ngModel)]="chip.value" />
+      </div>
+    </div>
+  </div>
+    </div>
     <div class="chip-popup-footer">
-      <button class="update-chip-btn">Update Chip Setting</button>
+      <button class="update-chip-btn"  (click)="updateStakes()">Update Chip Setting</button>
     </div>
   </div>
 </div>

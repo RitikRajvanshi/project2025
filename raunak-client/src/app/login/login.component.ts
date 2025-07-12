@@ -3,6 +3,8 @@ import { FormControl, FormControlName, FormGroup, Validators } from '@angular/fo
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.development';
+import { AdminService } from '../services/admin.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,7 @@ import { environment } from 'src/environments/environment.development';
 export class LoginComponent {
   loginForm: any;
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient, private adminService: AdminService) { }
 
 
   ngOnInit(): void {
@@ -28,24 +30,54 @@ export class LoginComponent {
 
 
   userLogin(userdata: Object) {
-    console.log(userdata)
-    const url = environment.LOGIN_URL + environment.LOGIN.USER_LOGIN;
+    if (this.loginForm.invalid) {
+      this.loginForm.controls['user_name'].markAsTouched();
+      this.loginForm.controls['user_password'].markAsTouched();
+    }
+    else {
+      const url = environment.LOGIN_URL + environment.LOGIN.USER_LOGIN;
+      this.http.post<any>(url, userdata).subscribe({
+        next: (response: any) => {
+          if (response && response.user_data) {
+            const user_data = response.user_data;
 
-    this.http.post<any>(url, userdata).subscribe((respond: any) => {
-      console.log(respond)
-      if (respond && respond.length !== 0) {
-        var user_data = respond[0];
-        console.log(user_data, "userdata");
-        // console.log(respond[0])
-        localStorage.setItem( "user_data",JSON.stringify(user_data));
-        // localStorage.setItem( "token",respond.token);
-        localStorage.setItem('isLoggedIn', 'true')
-        this.router.navigate(['client']);
+            this.adminService.updateUserData(user_data);
+            localStorage.setItem('isLoggedIn', 'true');
+
+          }
+          else {
+            console.log('else part');
+            Swal.fire({
+              icon: "error",
+              title: "Invalid Username or Password!",
+            });
+            return
+            // alert("Invalid Username or Password");
+          }
+
+          this.router.navigate(['client']);
+        },
+        error: (error) => {
+          console.log(error.status, "status");
+          if (error.status === 401) {
+            Swal.fire({
+              icon: "error",
+              title: "User not found!",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Unauthorized: Invalid credentials!",
+            });
+          }
+        }
       }
-      else {
-        alert("Invalid Username or Password");
-      }
-    })
+      )
+    }
+    // console.log(userdata)
+
+
   }
+
 
 }

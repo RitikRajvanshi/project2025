@@ -1,6 +1,5 @@
 import { Component, NgZone } from '@angular/core';
 import * as moment from 'moment';
-import { UserService } from 'src/app/services/user.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -21,7 +20,7 @@ export class InPlayComponent {
 
 
 
-  constructor(private userservice:UserService, private http:HttpClient){
+  constructor( private http:HttpClient){
   }
 
   async todaysMatch(){

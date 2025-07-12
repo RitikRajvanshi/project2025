@@ -14,6 +14,7 @@ import { BetHistoryComponent } from './bet-history/bet-history.component';
 import { LiveBetHistoryComponent } from './live-bet-history/live-bet-history.component';
 import { InplayLiveComponent } from './inplay-live/inplay-live.component';
 
+
 const routes: Routes = [
   {path: '', component: ClientComponent,
    children:[

@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { AdminService } from 'src/app/services/admin.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, firstValueFrom, interval } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { io, Socket } from 'socket.io-client';
 import { LoaderService } from 'src/app/services/loader.service';
 import { environment } from 'src/environments/environment.production';
+import { SharedService } from 'src/app/services/shared.service';
 import Swal from 'sweetalert2';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-inplay-live',
@@ -78,15 +80,19 @@ export class InplayLiveComponent {
     prev_balance: 0.00,
     current_balance: 0.00,
     estimated_profit: 0.00,
-    estimated_loss: 0.00
+    estimated_loss: 0.00,
+    mode:'bet'
   }
 
   matchFulldatainarray: any[] = [];
+  stakesValues:any;
+  chipEntries:any;
 
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private loaderService: LoaderService, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private loaderService: LoaderService,private adminService:AdminService, 
+    private sharedServices:SharedService, private clientService:ClientService) {
 
-    this.userService.userData$.subscribe((data) => {
+    this.adminService.userData$.subscribe((data) => {
       this.userData = data;
     })
     console.log(this.userData, 'this.userData');
@@ -105,10 +111,9 @@ export class InplayLiveComponent {
         if (!this.socket || !this.socket.connected) {
           this.connectSocket();
           this.getEstimatedProfitLossforcurrentMatch();
+          this.getStakes();
         }
       }
-
-       
     });
   }
 
@@ -408,7 +413,7 @@ export class InplayLiveComponent {
           timer: 1000
         });
 
-        const usersData: any = await firstValueFrom(this.userService.getUsersData());
+        const usersData: any = await firstValueFrom(this.adminService.getUsersData());
         console.log(usersData, "usersData");
 
         // 👇 Filter for current user only
@@ -419,7 +424,7 @@ export class InplayLiveComponent {
           // ✅ Update global userData
           if (updatedUser) {
             //update in whole application
-            this.userService.updateUserData(updatedUser);
+            this.adminService.updateUserData(updatedUser);
           }
         }
 
@@ -434,7 +439,7 @@ export class InplayLiveComponent {
   }
 
   async getEstimatedProfitLossforcurrentMatch(){
-        const betData: any = await firstValueFrom(this.userService.getAccountStatement());
+        const betData: any = await firstValueFrom(this.sharedServices.getAccountStatement());
         const filteredData = betData
           .filter((item: any) => item.user_id == this.userData.user_id && item.match_id == this.placeBetObj.match_id);
 
@@ -453,5 +458,52 @@ export class InplayLiveComponent {
         this.estimatedProfit.profit = totalEstimatedProfit;
         this.estimatedProfit.loss = totalEstimatedLoss;
   }
+
+
+   async getStakes() {
+    try {
+      const result: any = await firstValueFrom(this.sharedServices.getStakes());
+      const stakesData = result.filter((item: any) => {
+        return item?.user_id == this.userData?.user_id;
+      });
+      this.stakesValues = stakesData[0]?.stake_value;
+
+      //converting from object {"100":100 } --> ["100":100] --> [{key:"100", value:100}]
+
+      this.chipEntries = Object.entries(this.stakesValues).map(([key, value]) => ({ key, value }));
+
+      console.log(this.chipEntries, "this.stakesValues");
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+    async updateStakes() {
+      const chipsToSave: any = {};
+      const chipsObj: any = {
+        user_id: Number(this.userData?.user_id),
+        chips: {}
+      }
+      this.chipEntries.forEach((entry: any) => {
+        chipsToSave[entry.key] = Number(entry.value);
+      })
+  
+      chipsObj.chips = chipsToSave;
+  
+      const result: any = await firstValueFrom(this.clientService.updateStakes(chipsObj));
+      console.log(result, 'chipsObj')
+      if (result) {
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `${result?.message}!`,
+          showConfirmButton: false,
+          timer: 1000
+        });
+        this.getStakes();
+        this.openDialogBox = false;
+      }
+    }
 
 }
